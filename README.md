@@ -34,3 +34,9 @@ Eclipse의 Tomcat이 실행 중일 때 Chrome 일반 창과 시크릿 창에서 
 - `OPENAI_API_KEY`를 설정하면 메시지 본문을 OpenAI Moderation API로 검사합니다. 키가 없는 로컬 개발 환경에서는 기본 표현·연락처 필터를 적용합니다. 키가 설정된 상태에서 검사 서비스가 실패하면 해당 메시지 전송을 중단합니다.
 - API 키는 Eclipse의 Tomcat 실행 설정에서 넣고 서버를 재시작합니다. 키는 소스 코드나 Git에 추가하지 않습니다.
 - 채팅 메시지는 메모리에만 보관하고 종료 시 삭제합니다. 서버를 재시작하면 진행 중이던 대기실과 채팅방도 초기화됩니다.
+
+## 소스 구성
+
+- `frontend/src/main/webapp`에는 JSP 화면과 CSS·JavaScript가 있습니다.
+- `backend/src/main/java`에는 서버 코드가, `backend/src/main/resources`에는 수동 주제 SQL이 있습니다.
+- `db/init.sql`은 초기 DB 스키마입니다. 두 소스 폴더는 하나의 `seecha.war`로 빌드됩니다.

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Locale;
 import java.util.Set;
 
 @WebFilter("/*")
@@ -23,6 +24,8 @@ public final class RequestSecurityFilter implements Filter {
             "/profile", "/auth/logout", "/account/nickname", "/room/leave",
             "/api/match/join", "/api/match/ready", "/api/match/cancel",
             "/api/room/send", "/api/room/question", "/api/room/end");
+    private static final String PUBLIC_ORIGIN = System.getenv("SEECHA_PUBLIC_ORIGIN");
+    private static final String TRUSTED_PROXY = System.getenv("SEECHA_TRUSTED_PROXY");
     private static final long WINDOW_MS = 60_000;
     private final Map<String, Integer> attemptsByAddress = new HashMap<>();
     private long windowStart;
@@ -35,6 +38,26 @@ public final class RequestSecurityFilter implements Filter {
         setHeaders(response);
         String path = request.getRequestURI().substring(request.getContextPath().length());
         String method = request.getMethod();
+        String address = request.getRemoteAddr();
+        boolean proxied = address.equals(TRUSTED_PROXY);
+        if (PUBLIC_ORIGIN != null && !PUBLIC_ORIGIN.isBlank()) {
+            boolean secure = request.isSecure()
+                    || (proxied && "https".equalsIgnoreCase(request.getHeader("X-Forwarded-Proto")));
+            if (!secure && (proxied || java.net.URI.create(PUBLIC_ORIGIN).getHost().equalsIgnoreCase(request.getServerName()))) {
+                response.setStatus(308);
+                response.setHeader("Location", PUBLIC_ORIGIN + request.getRequestURI());
+                return;
+            }
+            if (secure) {
+                response.setHeader("Strict-Transport-Security", "max-age=31536000");
+            }
+        }
+        if (proxied) {
+            String client = request.getHeader("CF-Connecting-IP");
+            if (client != null && client.matches("[0-9a-fA-F:.]{3,45}")) {
+                address = client;
+            }
+        }
         boolean read = "GET".equals(method) || "HEAD".equals(method);
         boolean write = "POST".equals(method);
         boolean readable = PUBLIC_GET.contains(path) || PRIVATE_GET.contains(path);
@@ -72,27 +95,41 @@ public final class RequestSecurityFilter implements Filter {
                 reject(response, 403);
                 return;
             }
-            if (PUBLIC_POST.contains(path) && !allowAccountAttempt(request.getRemoteAddr(), path)) {
+            if (PUBLIC_POST.contains(path) && !allowAttempt(path + ':' + address,
+                    "/auth/login".equals(path) ? 20 : 12)) {
                 response.setHeader("Retry-After", "60");
                 reject(response, 429);
                 return;
             }
         }
+        if (write && "/auth/login".equals(path)) {
+            String username = request.getParameter("username");
+            if (username != null && username.matches("[A-Za-z0-9_]{4,24}")
+                    && !allowAttempt("login-account:" + username.toLowerCase(Locale.ROOT), 15)) {
+                response.setHeader("Retry-After", "60");
+                reject(response, 429);
+                return;
+            }
+        }
+        if (read && path.startsWith("/api/") && !allowAttempt(
+                "poll:" + request.getSession(false).getAttribute("memberId"), 90)) {
+            response.setHeader("Retry-After", "60");
+            reject(response, 429);
+            return;
+        }
         chain.doFilter(request, response);
     }
 
-    private synchronized boolean allowAccountAttempt(String address, String path) {
+    private synchronized boolean allowAttempt(String key, int limit) {
         long now = System.currentTimeMillis();
         if (now - windowStart >= WINDOW_MS) {
             windowStart = now;
             attemptsByAddress.clear();
         }
-        String key = path + ':' + address;
         if (!attemptsByAddress.containsKey(key) && attemptsByAddress.size() >= 4096) {
             return false;
         }
         int attempts = attemptsByAddress.getOrDefault(key, 0);
-        int limit = "/auth/login".equals(path) ? 20 : 12;
         if (attempts >= limit) {
             return false;
         }

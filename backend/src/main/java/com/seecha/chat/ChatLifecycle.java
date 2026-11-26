@@ -21,6 +21,10 @@ public final class ChatLifecycle implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
+        String publicOrigin = System.getenv("SEECHA_PUBLIC_ORIGIN");
+        if (publicOrigin != null && !publicOrigin.isBlank()) {
+            event.getServletContext().getSessionCookieConfig().setSecure(true);
+        }
         housekeeping = Executors.newSingleThreadScheduledExecutor();
         housekeeping.scheduleWithFixedDelay(() -> MatchQueue.INSTANCE.tick(System.currentTimeMillis()),
                 0, 5, TimeUnit.SECONDS);

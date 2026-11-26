@@ -5,3 +5,16 @@
 /.classpath
 /.project
 /.DS_Store
+
+.env.*
+*.key
+*.pem
+*.p12
+*.jks
+*.launch
+*.swp
+*.war
+*.log
+*.dump
+*.bak
+*-backup*.sql
