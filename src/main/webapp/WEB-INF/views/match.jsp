@@ -37,6 +37,10 @@
     <button id="join" class="btn btn-dark w-100" hidden>매칭 신청</button>
     <button id="ready" class="btn btn-dark w-100" hidden>준비 완료</button>
     <button id="cancel" class="btn btn-outline-dark w-100 mt-2" hidden>매칭 취소</button>
+    <aside class="lobby-note" aria-labelledby="chat-guidelines-title">
+        <h2 id="chat-guidelines-title">대화 주의사항</h2>
+        <p>욕설이나 다른 사람을 비하하는 표현은 삼가 주세요. 생각이 달라도 서로 존중하며 이야기해 주세요.</p>
+    </aside>
     <aside class="lobby-note" aria-labelledby="lobby-note-title">
         <h2 id="lobby-note-title">같은 상황, 다른 이유</h2>
         <p>살아온 환경과 경험이 다르면, 같은 상황에서도 서로 다른 선택을 할 수 있어요.</p>

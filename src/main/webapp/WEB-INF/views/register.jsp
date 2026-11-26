@@ -59,6 +59,21 @@
                     <p>필수 항목을 모두 입력하면 가입할 수 있어요.</p>
                     <%@ include file="profile-fields.jspf" %>
                 </fieldset>
+                <fieldset class="lobby-note mb-3">
+                    <legend class="h6 fw-bold">개인정보 수집·이용 동의</legend>
+                    <div id="privacy-details">
+                        <p><strong>수집 항목</strong> 아이디, 비밀번호(해시로 저장), 닉네임, 성인 여부 확인, 만 나이대, 어릴 적 성장 지역, 생활 단계. MBTI와 전공·직무 분야는 선택 항목이에요.</p>
+                        <p><strong>이용 목적</strong> 가입·로그인, 매칭, 익명 채팅에 사용해요. 같은 방 참여자는 닉네임과 매칭 프로필을 볼 수 있어요.</p>
+                        <p><strong>보관</strong> 계정과 프로필은 계정이 유지되는 동안 보관해요. 채팅 기록은 방이 종료되면 시차 서버에서 삭제돼요.</p>
+                        <p><strong>채팅 안전</strong> 유해 표현을 확인하기 위해 보낸 메시지의 내용이 OpenAI에 전달될 수 있어요.</p>
+                        <p>동의를 거부할 수 있어요. 필수 항목의 수집·이용에 동의하지 않으면 가입할 수 없어요.</p>
+                    </div>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" id="privacyConsent" name="privacyConsent" type="checkbox" value="yes"
+                               aria-describedby="privacy-details" <c:if test="${privacyConsent}">checked</c:if> required>
+                        <label class="form-check-label" for="privacyConsent">개인정보 수집·이용에 동의합니다. (필수)</label>
+                    </div>
+                </fieldset>
                 <button class="btn btn-dark w-100" type="submit">가입하기</button>
             </form>
         </c:otherwise>

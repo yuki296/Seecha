@@ -52,6 +52,8 @@ public final class RegisterServlet extends HttpServlet {
         boolean adult = "yes".equals(request.getParameter("adult"));
         request.setAttribute("username", username);
         request.setAttribute("adult", adult);
+        boolean privacyConsent = "yes".equals(request.getParameter("privacyConsent"));
+        request.setAttribute("privacyConsent", privacyConsent);
         var profile = ProfileForm.read(request);
         ProfileForm.prepare(request, profile);
 
@@ -66,6 +68,11 @@ public final class RegisterServlet extends HttpServlet {
         }
         if (!adult) {
             reject(request, response, 400, "만 19세 이상인지 확인해 주세요.");
+            return;
+        }
+
+        if (!privacyConsent) {
+            reject(request, response, 400, "개인정보 수집·이용 안내를 확인하고 동의해 주세요.");
             return;
         }
 
