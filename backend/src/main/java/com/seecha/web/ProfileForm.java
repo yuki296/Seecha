@@ -12,7 +12,7 @@ final class ProfileForm {
             "40대", "만 40~49세", "50대 이상", "만 50세 이상");
     private static final List<String> REGIONS = List.of("서울", "경기", "인천", "부산", "대구", "광주", "대전",
             "울산", "세종", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주");
-    private static final List<String> STAGES = List.of("대학생", "대학원생", "취준생", "직장인", "자영업자/프리랜서", "기타");
+    private static final List<String> STAGES = List.of("대학생", "대학원생", "취준생", "직장인", "알바생", "자영업자/프리랜서", "기타");
     private static final List<String> MBTIS = List.of("모름", "ISTJ", "ISFJ", "INFJ", "INTJ", "ISTP", "ISFP", "INFP",
             "INTP", "ESTP", "ESFP", "ENFP", "ENTP", "ESTJ", "ESFJ", "ENFJ", "ENTJ");
     private static final List<String> FIELDS = List.of("IT/공학", "인문/사회", "경영/경제", "예술/디자인",

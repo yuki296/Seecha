@@ -21,7 +21,7 @@ public final class MatchQueue {
     private final List<Group> groups = new ArrayList<>();
     private final Map<Long, Group> memberships = new HashMap<>();
     private long nextRevision;
-    private final Map<Long, Long> ended = new HashMap<>();
+    private final Map<Long, ClosedRoom> ended = new HashMap<>();
     private static final List<List<String>> TOPICS = List.of(
             List.of("친구가 중요한 실수를 했다는 걸 알게 됐어요. 당신이라면 친구에게 어떻게 말할 건가요?",
                     "다른 사람이 이미 알고 있다면 어떻게 할 건가요?",
@@ -144,7 +144,8 @@ public final class MatchQueue {
         advance(now);
         Group group = memberships.get(memberId);
         if (group == null || group.startedAt == 0) {
-            return ended.containsKey(memberId) ? Room.closed() : null;
+            var closed = ended.get(memberId);
+            return closed == null ? null : Room.closed(closed.notice());
         }
         Member member = group.members.get(memberId);
         member.lastSeen = now;
@@ -157,7 +158,7 @@ public final class MatchQueue {
                 group.members.values().stream().map(item -> new Participant(item.nickname, item.profile)).toList(),
                 group.messages.stream().filter(message -> message.sequence() >= member.visibleFrom).toList(),
                 group.questionVotes.size(), group.questionVotes.contains(memberId),
-                group.endVotes.size(), group.endVotes.contains(memberId), member.nickname);
+                group.endVotes.size(), group.endVotes.contains(memberId), member.nickname, "");
     }
 
     public synchronized SendResult checkSend(long memberId, long roomKey, UUID requestId, long now) {
@@ -206,13 +207,14 @@ public final class MatchQueue {
         if (!votes.add(memberId)) {
             return;
         }
-        if (votes.size() == 1) {
-            String request = ending ? "조기 종료를" : "다음 보조 질문을";
-            append(group, null, group.members.get(memberId).nickname + "님이 " + request + " 요청했습니다.", now);
-        }
+        String action = ending ? "조기 종료" : "보조 질문 공개";
+        String nickname = group.members.get(memberId).nickname;
+        String notice = votes.size() == 1 ? nickname + "님이 " + action + "를 요청했습니다."
+                : nickname + "님이 " + action + "에 동의했습니다.";
+        append(group, null, notice, now);
         if (votes.size() == group.members.size()) {
             if (ending) {
-                finish(group, now);
+                finish(group, now, notice);
                 groups.remove(group);
             } else {
                 group.questionIndex++;
@@ -234,13 +236,17 @@ public final class MatchQueue {
     }
 
     private void finish(Group group, long now) {
+        finish(group, now, "");
+    }
+
+    private void finish(Group group, long now, String notice) {
         group.messages.clear();
         group.sentRequests.clear();
         group.questionVotes.clear();
         group.endVotes.clear();
         group.members.keySet().forEach(id -> {
             memberships.remove(id);
-            ended.put(id, now);
+            ended.put(id, new ClosedRoom(now, notice));
         });
         group.members.clear();
     }
@@ -250,7 +256,7 @@ public final class MatchQueue {
     }
 
     private void advance(long now) {
-        ended.values().removeIf(time -> now - time >= ROOM_MS);
+        ended.values().removeIf(room -> now - room.endedAt() >= ROOM_MS);
         groups.removeIf(group -> {
             if (group.startedAt != 0) {
                 boolean everyoneInactive = group.members.values().stream()
@@ -344,15 +350,17 @@ public final class MatchQueue {
 
     public record Message(long sequence, String nickname, String text, long sentAt) {}
 
+    private record ClosedRoom(long endedAt, String notice) {}
+
     public record Participant(String nickname, Profile profile) {}
 
     public record RevealedQuestion(int number, String text, boolean current) {}
 
     public record Room(boolean ended, String scenario, List<RevealedQuestion> questions, int step, long remainingSeconds,
                        long revision, long roomKey, List<Participant> participants, List<Message> messages,
-                       int questionVotes, boolean questionVoted, int endVotes, boolean endVoted, String nickname) {
-        static Room closed() {
-            return new Room(true, "", List.of(), 0, 0, 0, 0, List.of(), List.of(), 0, false, 0, false, "");
+                       int questionVotes, boolean questionVoted, int endVotes, boolean endVoted, String nickname, String endNotice) {
+        static Room closed(String notice) {
+            return new Room(true, "", List.of(), 0, 0, 0, 0, List.of(), List.of(), 0, false, 0, false, "", notice);
         }
     }
 

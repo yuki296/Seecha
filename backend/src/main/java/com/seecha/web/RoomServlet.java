@@ -40,6 +40,7 @@ public final class RoomServlet extends HttpServlet {
             session.setAttribute("matchFormToken", UUID.randomUUID().toString());
         }
         request.setAttribute("roomEnded", room.ended());
+        request.setAttribute("endNotice", room.endNotice());
         if (room != null && !room.ended()) {
             String[] topic = room.scenario().split("\\R\\s*Q\\.\\s*", 2);
             if (topic.length == 1 && topic[0].stripTrailing().endsWith("?")) {

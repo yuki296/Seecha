@@ -6,6 +6,7 @@
     <c:when test="${roomEnded}">
         <section id="room-state" data-ended="true" class="py-4">
             <h2>대화가 종료됐어요</h2>
+            <c:if test="${not empty endNotice}"><p><c:out value="${endNotice}"/></p></c:if>
             <p>채팅 기록을 삭제했어요.</p>
             <a class="btn btn-dark" href="<c:out value='${matchUrl}'/>">다시 매칭하기</a>
             <a class="btn btn-outline-dark" href="<c:out value='${homeUrl}'/>">홈으로</a>
@@ -72,7 +73,7 @@
                         <p>전원이 동의하면 보조 질문 <c:out value="${room.step}"/>이 공개돼요.</p>
                         <p class="small">동의 <c:out value="${room.questionVotes}"/> / <c:out value="${room.participants.size()}"/>명</p>
                         <button type="button" class="btn btn-dark" data-action="question"
-                                data-agree="true" ${room.questionVoted or room.participants.size() lt 2 ? 'disabled' : ''}>공개에 동의</button>
+                                data-agree="true" ${room.questionVoted or room.participants.size() lt 2 ? 'disabled' : ''}><c:out value="${room.questionVotes eq 0 ? '공개 요청' : '공개에 동의'}"/></button>
                         <button type="button" class="btn btn-outline-dark" data-action="question"
                                 data-agree="false" ${room.questionVotes eq 0 ? 'disabled' : ''}>현재 질문 유지</button>
                     </c:when>
@@ -83,7 +84,7 @@
                 <p>전원이 동의하면 대화가 종료되고 채팅 기록을 삭제해요.</p>
                 <p class="small">동의 <c:out value="${room.endVotes}"/> / <c:out value="${room.participants.size()}"/>명</p>
                 <button type="button" class="btn btn-dark" data-action="end"
-                        data-agree="true" ${room.endVoted or room.participants.size() lt 2 ? 'disabled' : ''}>종료에 동의</button>
+                        data-agree="true" ${room.endVoted or room.participants.size() lt 2 ? 'disabled' : ''}><c:out value="${room.endVotes eq 0 ? '조기 종료 요청' : '종료에 동의'}"/></button>
                 <button type="button" class="btn btn-outline-dark" data-action="end"
                         data-agree="false" ${room.endVotes eq 0 ? 'disabled' : ''}>대화 계속하기</button>
             </template>

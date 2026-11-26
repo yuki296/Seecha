@@ -7,7 +7,7 @@ const panelTitle = document.getElementById("chat-panel-title");
 const panelBody = document.getElementById("chat-panel-body");
 const panelMenu = document.getElementById("chat-panel-menu");
 const panelError = document.getElementById("chat-panel-error");
-const panelTitles = {menu: "채팅방 메뉴", topic: "현재 질문", people: "참여자", question: "다음 질문", end: "조기 종료"};
+const panelTitles = {menu: "채팅방 메뉴", topic: "현재 질문", people: "참여자", question: "보조 질문", end: "조기 종료"};
 let activePanel;
 let lastPanelContent;
 let panelTrigger;

@@ -41,7 +41,7 @@
         <section id="chat-panel-menu">
             <div class="d-grid gap-2">
                 <button type="button" class="btn btn-outline-dark" data-panel="people">참여자 보기</button>
-                <button type="button" class="btn btn-outline-dark" data-panel="question">다음 질문</button>
+                <button type="button" class="btn btn-outline-dark" data-panel="question">보조 질문</button>
                 <button type="button" class="btn btn-outline-dark" data-panel="end">조기 종료</button>
             </div>
         <form id="leave-room" method="post" action="<c:out value='${leaveUrl}'/>">
