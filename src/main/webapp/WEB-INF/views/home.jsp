@@ -14,31 +14,41 @@
 <body>
     <main class="home-shell">
         <section class="home-hero" aria-labelledby="home-title">
-            <p class="home-brand">시차 <span>seecha</span></p>
-            <h1 id="home-title">같은 상황,<br>서로 다른 시선</h1>
-            <p class="home-intro">하나의 질문에서 시작하는 성인 익명 대화</p>
-            <div class="home-actions">
-                <c:url var="registerUrl" value="/auth/register"/>
-                <c:url var="loginUrl" value="/auth/login"/>
-                <c:url var="matchUrl" value="/match"/>
-                <c:url var="myPageUrl" value="/mypage"/>
-                <c:choose>
-                    <c:when test="${empty sessionScope.memberId}">
-                        <a class="btn btn-dark" href="<c:out value='${loginUrl}'/>">로그인</a>
-                        <a class="btn btn-outline-dark" href="<c:out value='${registerUrl}'/>">회원가입</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="btn btn-dark" href="<c:out value='${matchUrl}'/>">매칭 시작</a>
-                        <a class="btn btn-outline-dark" href="<c:out value='${myPageUrl}'/>">마이페이지</a>
-                    </c:otherwise>
-                </c:choose>
+            <div class="home-hero-copy">
+                <p class="home-brand">시차 <span>seecha</span></p>
+                <h1 id="home-title">같은 상황,<br>서로 다른 시선</h1>
+                <p class="home-intro">하나의 질문에서 시작하는 익명 대화</p>
+                <div class="home-actions">
+                    <c:url var="registerUrl" value="/auth/register"/>
+                    <c:url var="loginUrl" value="/auth/login"/>
+                    <c:url var="matchUrl" value="/match"/>
+                    <c:url var="myPageUrl" value="/mypage"/>
+                    <c:choose>
+                        <c:when test="${empty sessionScope.memberId}">
+                            <a class="btn btn-dark" href="<c:out value='${loginUrl}'/>">로그인</a>
+                            <a class="btn btn-outline-dark" href="<c:out value='${registerUrl}'/>">회원가입</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-dark" href="<c:out value='${matchUrl}'/>">매칭 시작</a>
+                            <a class="btn btn-outline-dark" href="<c:out value='${myPageUrl}'/>">마이페이지</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
+            <figure class="home-preview">
+                <figcaption>이런 이야기로 시작해요</figcaption>
+                <p class="preview-question">친구가 당신에게만 비밀을 털어놓았어요. 다른 친구가 그 일을 직접 묻는다면 어떻게 답하겠어요?</p>
+                <p class="preview-reply">먼저 친구가 왜 비밀로 하고 싶은지 물어볼래요.</p>
+                <p class="preview-reply">저는 직접 얘기할 기회를 주고 싶어요.</p>
+            </figure>
         </section>
-        <section class="home-story" aria-labelledby="story-title">
-            <h2 id="story-title">시차를 만든 이유</h2>
-            <p>같은 일을 겪고도 누군가는 먼저 마음을 살피고, 누군가는 약속을 떠올려요. 그 차이가 어디서 오는지 궁금했어요.</p>
-            <p>그래서 살아온 배경이 다른 사람들이 한 질문 앞에 모여, 각자의 선택과 그 이유를 편하게 이야기할 수 있는 자리를 만들었어요.</p>
-            <p>대화가 끝나고 “아, 저렇게 생각할 수도 있구나” 하는 마음 하나가 남았으면 해요.</p>
+        <section class="home-flow" aria-labelledby="flow-title">
+            <h2 id="flow-title">시차에서는 이렇게 만나요</h2>
+            <ol>
+                <li><strong>매칭하기</strong><span>서로 다른 배경의 사람을 만나요.</span></li>
+                <li><strong>같은 질문 보기</strong><span>모두에게 같은 상황과 질문이 열려요.</span></li>
+                <li><strong>익명으로 이야기하기</strong><span>닉네임으로 각자의 선택과 이유를 나눠요.</span></li>
+            </ol>
         </section>
     </main>
 </body>

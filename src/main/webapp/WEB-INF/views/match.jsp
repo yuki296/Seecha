@@ -37,6 +37,12 @@
     <button id="join" class="btn btn-dark w-100" hidden>매칭 신청</button>
     <button id="ready" class="btn btn-dark w-100" hidden>준비 완료</button>
     <button id="cancel" class="btn btn-outline-dark w-100 mt-2" hidden>매칭 취소</button>
+    <aside class="lobby-note" aria-labelledby="lobby-note-title">
+        <h2 id="lobby-note-title">같은 상황, 다른 이유</h2>
+        <p>살아온 환경과 경험이 다르면, 같은 상황에서도 서로 다른 선택을 할 수 있어요.</p>
+        <p>각자라면 어떻게 행동할지, 그 이유를 편하게 나눠보세요.</p>
+        <p><strong>서로의 생각이 다를 수 있음을 인정하고, 그 차이가 어디서 오는지 알아가는 대화예요.</strong></p>
+    </aside>
 </main>
 </body>
 </html>

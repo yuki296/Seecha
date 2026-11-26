@@ -98,24 +98,110 @@ body {
     border-radius: .8rem;
 }
 
-.home-story {
-    max-width: 44rem;
-    margin-block: clamp(1rem, 4vw, 2rem) 0;
-    padding: clamp(1.2rem, 4vw, 2.5rem);
-    border: 1px solid var(--seecha-line);
-    border-radius: 1.4rem;
-    background: #fffdfd;
-    line-height: 1.85;
+
+.home-hero {
+    display: grid;
+    gap: clamp(1.5rem, 5vw, 3.5rem);
+    align-items: center;
+}
+
+.home-preview {
+    margin: 0;
+    padding: 1.25rem;
+    border: 1px solid #fff;
+    border-radius: 1.35rem;
+    background: #fffc;
+    box-shadow: 0 12px 32px #51407113;
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    line-height: 1.55;
     word-break: keep-all;
-    overflow-wrap: anywhere;
 }
 
-.home-story h2 {
-    margin-bottom: .8rem;
-    font-size: clamp(1.25rem, 3vw, 1.65rem);
+.home-preview figcaption {
+    color: var(--seecha-muted);
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.preview-question {
+    margin: 0 0 .25rem;
+    font-weight: 650;
+}
+
+.preview-reply {
+    width: fit-content;
+    margin: 0;
+    padding: .55rem .75rem;
+    border-radius: .85rem .85rem .85rem .2rem;
+    background: #eee5fb;
+    font-size: .9rem;
+}
+
+.preview-reply:last-child {
+    align-self: flex-end;
+    border-radius: .85rem .85rem .2rem .85rem;
+    background: #e1f1ec;
+}
+
+.home-flow {
+    margin-block-start: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.home-flow h2, .lobby-note h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
     font-weight: 750;
+    margin-bottom: .8rem;
 }
 
-.home-story p:last-child {
+.home-flow ol {
+    display: grid;
+    gap: .65rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.home-flow li {
+    display: grid;
+    gap: .3rem;
+    padding: 1rem;
+    border: 1px solid var(--seecha-line);
+    border-radius: .9rem;
+    background: #fffdfd;
+}
+
+.home-flow span {
+    color: var(--seecha-muted);
+    font-size: .9rem;
+}
+
+.lobby-note {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--seecha-line);
+    border-radius: .9rem;
+    background: #f7f2fd;
+    font-size: .9rem;
+    line-height: 1.7;
+    word-break: keep-all;
+}
+
+.lobby-note p {
+    margin-bottom: .55rem;
+}
+
+.lobby-note p:last-child {
     margin-bottom: 0;
+}
+
+@media (min-width: 48rem) {
+    .home-hero {
+        grid-template-columns: 1.1fr 1fr;
+    }
+
+    .home-flow ol {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
