@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="chat-page">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
@@ -14,7 +14,7 @@
     <link href="<c:out value='${styleUrl}'/>" rel="stylesheet">
     <script src="<c:out value='${scriptUrl}'/>" defer></script>
 </head>
-<body>
+<body class="chat-page">
 <c:url var="leaveUrl" value="/room/leave"/>
 <c:url var="apiUrl" value="/api/room/"/>
 <c:url var="matchUrl" value="/match"/>
@@ -29,7 +29,7 @@
     <p id="chat-connection" class="small text-body-secondary mb-0" role="status" hidden></p>
     <p id="chat-error" class="small text-danger mb-0" role="alert" hidden></p>
     <form id="composer" class="gap-2" ${roomEnded ? 'hidden' : ''}>
-        <input class="form-control" name="message" maxlength="500" aria-label="메시지" placeholder="메시지 입력" required>
+        <input class="form-control" name="message" maxlength="500" enterkeyhint="send" aria-label="메시지" placeholder="메시지 입력" required>
         <button class="btn btn-dark text-nowrap">전송</button>
     </form>
     <dialog id="chat-panel" aria-labelledby="chat-panel-title">

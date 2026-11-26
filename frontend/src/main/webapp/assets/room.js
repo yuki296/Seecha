@@ -24,23 +24,18 @@ let pendingMessage;
 const viewport = window.visualViewport;
 
 function fitChatToViewport() {
-    const keyboardVisible = viewport && Math.abs(viewport.scale - 1) < .01
-        && window.innerHeight - viewport.height > 100;
-    room.toggleAttribute("data-viewport-adjusted", Boolean(keyboardVisible));
-    if (!keyboardVisible) {
-        room.style.removeProperty("--chat-visible-height");
-        room.style.removeProperty("--chat-visible-top");
-        return;
-    }
+    if (!viewport || Math.abs(viewport.scale - 1) >= .01) return;
     const messages = document.getElementById("messages");
     const atBottom = messages && messages.scrollHeight - messages.scrollTop - messages.clientHeight < 36;
-    room.style.setProperty("--chat-visible-height", `${viewport.height}px`);
-    room.style.setProperty("--chat-visible-top", `${viewport.offsetTop}px`);
+    room.style.setProperty("--chat-visible-height", `${Math.floor(viewport.height)}px`);
+    room.style.setProperty("--chat-visible-top", `${Math.max(0, viewport.offsetTop)}px`);
     if (atBottom) messages.scrollTop = messages.scrollHeight;
 }
 
 viewport?.addEventListener("resize", fitChatToViewport);
 viewport?.addEventListener("scroll", fitChatToViewport);
+window.addEventListener("resize", fitChatToViewport);
+window.addEventListener("pageshow", fitChatToViewport);
 fitChatToViewport();
 
 function syncPanel() {

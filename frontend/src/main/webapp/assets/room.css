@@ -1,3 +1,9 @@
+.chat-page {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
 #chat-room {
     --chat-surface: #f3edf9;
     --chat-ink: #302647;
@@ -5,20 +11,22 @@
     --chat-own: #e5d8f8;
     height: 100vh;
     height: var(--chat-visible-height, 100dvh);
+    position: fixed;
+    inset-inline: 0;
+    top: var(--chat-visible-top, 0px);
+    width: 100%;
     max-width: 540px;
+    margin-inline: auto;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: .7rem;
     color: var(--chat-ink);
 }
 
-#chat-room[data-viewport-adjusted] {
-    position: fixed;
-    top: var(--chat-visible-top, 0px);
-    left: 0;
-    right: 0;
-    margin-inline: auto;
-    width: 100%;
+#chat-room > header,
+#room-state > :not(#messages) {
+    flex-shrink: 0;
 }
 
 #room-view, #room-state {
@@ -53,7 +61,7 @@
 
 #chat-panel {
     width: min(calc(100% - 2rem), 500px);
-    max-height: min(80dvh, 36rem);
+    max-height: min(calc(var(--chat-visible-height, 100dvh) - 2rem), 36rem);
     overflow: auto;
     padding: 1.1rem;
     border: 1px solid #d8c9ec;
@@ -73,7 +81,8 @@
 #messages {
     flex: 1;
     min-height: 0;
-    overflow: auto;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
     margin-top: .5rem;
     padding: .8rem .75rem;
     background: var(--chat-surface);
@@ -140,7 +149,11 @@
 #composer:not([hidden]) {
     display: flex;
     flex-shrink: 0;
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+#composer:focus-within {
+    padding-bottom: 0;
 }
 
 #composer input {
