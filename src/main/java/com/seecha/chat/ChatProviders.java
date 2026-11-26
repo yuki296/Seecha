@@ -251,7 +251,8 @@ public final class ChatProviders {
             throw new IOException("Unexpected Gemini topic shape");
         }
         List<String> topic = new ArrayList<>();
-        String scenario = validate(result.get("scenario"), 160);
+        // The prompt targets about 100–160 characters, with room for a small overrun.
+        String scenario = validate(result.get("scenario"), 180);
         String mainQuestion = validate(result.get("mainQuestion"), 145);
         topic.add(scenario + "\\n\\nQ. " + mainQuestion);
         List<String> allQuestions = new ArrayList<>(4);
