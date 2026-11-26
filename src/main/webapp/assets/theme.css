@@ -1,0 +1,121 @@
+:root {
+    --seecha-ink: #302647;
+    --seecha-muted: #615673;
+    --seecha-accent: #654d92;
+    --seecha-line: #e4dcef;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--seecha-ink);
+    background: linear-gradient(150deg, #f1eaff, #fff7f2 62%, #edf7f3);
+}
+
+.btn-dark {
+    --bs-btn-bg: var(--seecha-accent);
+    --bs-btn-border-color: var(--seecha-accent);
+    --bs-btn-hover-bg: #513a7a;
+    --bs-btn-hover-border-color: #513a7a;
+    --bs-btn-active-bg: #49326d;
+    --bs-btn-active-border-color: #49326d;
+    --bs-btn-disabled-bg: #75658f;
+    --bs-btn-disabled-border-color: #75658f;
+}
+
+.btn-outline-dark {
+    --bs-btn-color: #59437f;
+    --bs-btn-border-color: #917bb3;
+    --bs-btn-hover-color: #3e2d5c;
+    --bs-btn-hover-bg: #eee6fa;
+    --bs-btn-hover-border-color: #917bb3;
+    --bs-btn-active-color: #3e2d5c;
+    --bs-btn-active-bg: #e7dcf5;
+    --bs-btn-active-border-color: #917bb3;
+}
+
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+    border-color: #9277ba;
+    box-shadow: 0 0 0 .2rem #bea8dc55;
+}
+
+.page-card {
+    width: calc(100% - 2rem);
+    margin: clamp(1rem, 6vh, 4rem) auto;
+    padding: clamp(1.2rem, 4vw, 2rem);
+    border: 1px solid var(--seecha-line);
+    border-radius: 1.3rem;
+    background: #fffdfd;
+    box-shadow: 0 12px 36px #51407112;
+}
+
+.home-shell {
+    width: min(calc(100% - 2rem), 56rem);
+    margin-inline: auto;
+    padding-block: clamp(1rem, 5vh, 3.5rem);
+}
+
+.home-hero {
+    padding: clamp(1.5rem, 6vw, 4.5rem);
+    border: 1px solid #dfd1f3;
+    border-radius: clamp(1.4rem, 4vw, 2.5rem);
+    background: radial-gradient(ellipse at 96% 18%, #fde4ea, transparent 56%),
+                radial-gradient(ellipse at 98% 100%, #dcefeb, transparent 50%), #eee5fd;
+}
+
+.home-brand {
+    font-size: 1.1rem;
+    font-weight: 750;
+}
+
+.home-brand span {
+    margin-inline-start: .35rem;
+    color: var(--seecha-muted);
+    font-weight: 500;
+}
+
+.home-hero h1 {
+    margin-block: 1.8rem 1rem;
+    font-size: clamp(2.15rem, 7vw, 4.65rem);
+    font-weight: 800;
+    letter-spacing: -.065em;
+    line-height: 1.12;
+}
+
+.home-intro {
+    color: var(--seecha-muted);
+    font-size: clamp(1rem, 2.8vw, 1.25rem);
+}
+
+.home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin-top: 1.6rem;
+}
+
+.home-actions .btn {
+    padding: .65rem 1.05rem;
+    border-radius: .8rem;
+}
+
+.home-story {
+    max-width: 44rem;
+    margin-block: clamp(1rem, 4vw, 2rem) 0;
+    padding: clamp(1.2rem, 4vw, 2.5rem);
+    border: 1px solid var(--seecha-line);
+    border-radius: 1.4rem;
+    background: #fffdfd;
+    line-height: 1.85;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
+.home-story h2 {
+    margin-bottom: .8rem;
+    font-size: clamp(1.25rem, 3vw, 1.65rem);
+    font-weight: 750;
+}
+
+.home-story p:last-child {
+    margin-bottom: 0;
+}

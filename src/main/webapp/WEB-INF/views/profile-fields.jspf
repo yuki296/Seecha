@@ -1,0 +1,47 @@
+<%@ page pageEncoding="UTF-8" %>
+        <div class="mb-3">
+            <label class="form-label" for="ageGroup">만 나이 · 필수</label>
+            <select class="form-select" id="ageGroup" name="ageGroup" required>
+                <option value="">선택하세요</option>
+                <c:forEach var="option" items="${ages}">
+                    <option value="<c:out value='${option}'/>" <c:if test="${profile.ageGroup eq option}">selected</c:if>><c:out value="${ageLabels[option]}"/></option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="childhoodRegion">어릴 적 성장 지역 · 필수</label>
+            <select class="form-select" id="childhoodRegion" name="childhoodRegion" required>
+                <option value="">선택하세요</option>
+                <c:forEach var="option" items="${regions}">
+                    <option value="<c:out value='${option}'/>" <c:if test="${profile.childhoodRegion eq option}">selected</c:if>><c:out value="${option}"/></option>
+                </c:forEach>
+            </select>
+            <div class="form-text">어릴 때 가장 오래 살았던 시·도를 선택하세요.</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="lifeStage">현재 생활 단계 · 필수</label>
+            <select class="form-select" id="lifeStage" name="lifeStage" required>
+                <option value="">선택하세요</option>
+                <c:forEach var="option" items="${stages}">
+                    <option value="<c:out value='${option}'/>" <c:if test="${profile.lifeStage eq option}">selected</c:if>><c:out value="${option}"/></option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="mbti">MBTI · 선택</label>
+            <select class="form-select" id="mbti" name="mbti">
+                <option value="">선택하세요</option>
+                <c:forEach var="option" items="${mbtis}">
+                    <option value="<c:out value='${option}'/>" <c:if test="${profile.mbti eq option}">selected</c:if>><c:out value="${option}"/></option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="field">전공·직무 분야 · 선택</label>
+            <select class="form-select" id="field" name="field">
+                <option value="">선택하세요</option>
+                <c:forEach var="option" items="${fields}">
+                    <option value="<c:out value='${option}'/>" <c:if test="${profile.field eq option}">selected</c:if>><c:out value="${option}"/></option>
+                </c:forEach>
+            </select>
+        </div>
