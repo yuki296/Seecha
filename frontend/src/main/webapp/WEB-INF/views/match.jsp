@@ -20,6 +20,7 @@
 <c:url var="myPageUrl" value="/mypage"/>
 <c:url var="loginUrl" value="/auth/login"/>
 <main id="matching" class="container page-card" style="max-width: 420px"
+      data-capacity="<c:out value='${roomCapacity}'/>"
       data-api="<c:out value='${matchApi}'/>" data-profile="<c:out value='${profileUrl}'/>"
       data-room="<c:out value='${roomUrl}'/>" data-mypage="<c:out value='${myPageUrl}'/>"
       data-login="<c:out value='${loginUrl}'/>" data-token="<c:out value='${sessionScope.matchFormToken}'/>">

@@ -16,7 +16,7 @@
         <section id="room-state" data-ended="false" data-votes="${room.questionVotes gt 0 or room.endVotes gt 0}" data-step="${room.step}" data-room-key="<c:out value='${room.roomKey}'/>" data-revision="<c:out value='${room.revision}'/>">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <strong><c:out value="${room.step}"/>/4</strong>
-                <button type="button" class="btn btn-link p-0 text-reset" data-panel="people">참여자 <c:out value="${room.participants.size()}"/> / 5명</button>
+                <button type="button" class="btn btn-link p-0 text-reset" data-panel="people">참여자 <c:out value="${room.participants.size()}"/> / <c:out value="${roomCapacity}"/>명</button>
                 <span>남은 시간 <c:out value="${remainingLabel}"/></span>
             </div>
             <c:if test="${showEndingSoon}"><p class="small mb-2">대화 종료까지 5분 이하 남았어요.</p></c:if>

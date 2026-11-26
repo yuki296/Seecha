@@ -39,6 +39,7 @@ public final class RoomServlet extends HttpServlet {
         if (!fragment && session.getAttribute("matchFormToken") == null) {
             session.setAttribute("matchFormToken", UUID.randomUUID().toString());
         }
+        request.setAttribute("roomCapacity", MatchQueue.CAPACITY);
         request.setAttribute("roomEnded", room.ended());
         request.setAttribute("endNotice", room.endNotice());
         if (room != null && !room.ended()) {

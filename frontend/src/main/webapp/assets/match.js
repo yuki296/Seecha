@@ -23,7 +23,7 @@ function render(state) {
     ready.disabled = state.count < 2;
     ready.textContent = state.ready ? "준비 취소" : "준비 완료";
     cancel.textContent = started ? "나가기" : "매칭 취소";
-    participants.textContent = state.count ? `참여자 ${state.count} / 5명` : "매칭을 신청해 주세요.";
+    participants.textContent = state.count ? `참여자 ${state.count} / ${page.dataset.capacity}명` : "매칭을 신청해 주세요.";
     const minutes = String(Math.floor(state.remainingSeconds / 60)).padStart(2, "0");
     const seconds = String(state.remainingSeconds % 60).padStart(2, "0");
     timer.textContent = waiting && state.count >= 2 ? `남은 시간 ${minutes}:${seconds}` : "";

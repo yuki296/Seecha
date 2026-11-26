@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public final class MatchQueue {
     public static final MatchQueue INSTANCE = new MatchQueue();
-    private static final int CAPACITY = 5;
+    public static final int CAPACITY = 4;
     private static final long WAIT_MS = Duration.ofMinutes(4).toMillis();
     private static final long ROOM_MS = Duration.ofMinutes(60).toMillis();
     private static final long INACTIVE_MS = Duration.ofMinutes(2).toMillis();

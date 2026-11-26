@@ -37,6 +37,7 @@ public final class MatchServlet extends HttpServlet {
                 session.setAttribute(TOKEN, UUID.randomUUID().toString());
             }
             response.setHeader("Cache-Control", "no-store");
+            request.setAttribute("roomCapacity", MatchQueue.CAPACITY);
             request.getRequestDispatcher("/WEB-INF/views/match.jsp").forward(request, response);
         } else if (!"/api/match/status".equals(path)) {
             response.setHeader("Allow", "POST");
