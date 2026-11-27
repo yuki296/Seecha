@@ -80,6 +80,8 @@ CREATE TABLE IF NOT EXISTS chat_topics (
     KEY ix_chat_topic_category (category)
 );
 
+CREATE TABLE IF NOT EXISTS manual_chat_topics LIKE chat_topics;
+
 SET @seecha_admin_migration = IF(
     EXISTS (SELECT 1 FROM information_schema.columns
             WHERE table_schema = DATABASE() AND table_name = 'members' AND column_name = 'is_admin'),

@@ -1,8 +1,6 @@
 package com.seecha.dao;
 
 import com.seecha.chat.TopicStory;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +20,7 @@ public final class TopicDao {
         return load(sql);
     }
 
-    public List<TopicStory> installManualTopics() throws IOException, SQLException {
-        try (var seed = TopicDao.class.getResourceAsStream("/manual-topics.sql")) {
-            if (seed == null) {
-                throw new IOException("Manual topic SQL is missing");
-            }
-            try (var connection = database.connect(); var statement = connection.createStatement()) {
-                statement.execute("CREATE TABLE IF NOT EXISTS manual_chat_topics LIKE chat_topics");
-                statement.executeUpdate(new String(seed.readAllBytes(), StandardCharsets.UTF_8));
-            }
-        }
+    public List<TopicStory> manualTopics() throws SQLException {
         return load("""
                 SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three, category, story_title, COALESCE(stage_title_one, opening_title),
                        COALESCE(stage_title_two, follow_up_title_one), COALESCE(stage_title_three, follow_up_title_two),

@@ -37,9 +37,9 @@ public final class ChatLifecycle implements ServletContextListener {
 
     private void loadManualTopics(ServletContextEvent event) {
         try {
-            manualTopics = topics.installManualTopics();
+            manualTopics = topics.manualTopics();
             MatchQueue.INSTANCE.useManualTopics(manualTopics);
-        } catch (IOException | SQLException exception) {
+        } catch (SQLException exception) {
             event.getServletContext().log("Could not load manual chat topics: " + exception.getClass().getSimpleName());
         }
     }
