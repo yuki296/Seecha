@@ -32,6 +32,10 @@ public final class ChatProviders {
             "씨발|씨벌|씨팔|씨바(?=$|[라야])|시팔|지랄|시발(?:놈|년)|좆|병신|개새끼|새끼야|미친(?:놈|년)|꺼져|죽여버릴");
     private static final Pattern ABUSE_SHORTHAND = Pattern.compile(
             "(?<![\\p{L}\\p{N}])(?:시발|ㅅ[\\s\\p{P}]*ㅂ|ㅂ[\\s\\p{P}]*ㅅ|ㅈ[\\s\\p{P}]*ㄹ)(?![\\p{L}\\p{N}])");
+    private static final Pattern NEUTRAL_MENTION = Pattern.compile(
+            "(?:(?:피해자|욕설)|(?:(?:[0-9]{1,3}|한|두|세|네|몇|여러)\\s*명의?\\s*)?"
+                    + "피해자(?:가|는)?\\s*(?:발생했(?:군요|네요|어요|습니다)|생겼(?:군요|네요|어요|습니다)))"
+                    + "[.!?。…]*");
     private static final Pattern CONTACT = Pattern.compile(
             "[A-Z0-9._%+-]+@[A-Z0-9.-]+[.][A-Z]{2,}|(?<![0-9])01[016789][ -]?[0-9]{3,4}[ -]?[0-9]{4}(?![0-9])",
             Pattern.CASE_INSENSITIVE);
@@ -55,8 +59,7 @@ public final class ChatProviders {
         try {
             JsonObject response = post("https://api.openai.com/v1/moderations", "Authorization",
                     "Bearer " + OPENAI_KEY, Duration.ofSeconds(8), Map.of("model", "omni-moderation-latest", "input", text));
-            return response.getAsJsonArray("results").get(0).getAsJsonObject().get("flagged").getAsBoolean()
-                    ? Decision.BLOCKED : Decision.ALLOWED;
+            return assessModeration(response.getAsJsonArray("results").get(0).getAsJsonObject(), normalized);
         } catch (IOException | RuntimeException exception) {
             return Decision.UNAVAILABLE;
         } catch (InterruptedException exception) {
@@ -65,6 +68,21 @@ public final class ChatProviders {
         } finally {
             CHECKS.release();
         }
+    }
+
+    private static Decision assessModeration(JsonObject result, String normalized) {
+        if (!result.get("flagged").getAsBoolean()) {
+            return Decision.ALLOWED;
+        }
+        var categories = result.getAsJsonObject("categories");
+        // Only exempt a whole neutral phrase when non-graphic violence is the sole classifier flag.
+        if (NEUTRAL_MENTION.matcher(normalized.strip()).matches() && categories.has("violence")
+                && categories.get("violence").getAsBoolean()
+                && categories.entrySet().stream().noneMatch(entry ->
+                        !entry.getKey().equals("violence") && entry.getValue().getAsBoolean())) {
+            return Decision.ALLOWED;
+        }
+        return Decision.BLOCKED;
     }
 
     public static boolean generationEnabled() {
