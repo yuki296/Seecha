@@ -44,7 +44,6 @@
             <img src="<c:out value='${letterUrl}'/>" width="384" height="384" alt="">
             <span class="developer-story-preview">
                 <strong>Yuki가 전하는 이야기</strong>
-                <span>“어떻게 저렇게 생각할 수 있지?” 시차는 이 질문에서 시작됐어요.</span>
                 <span class="developer-story-open">이야기 읽기 <span aria-hidden="true">›</span></span>
                 <span class="developer-story-close">이야기 접기</span>
             </span>
