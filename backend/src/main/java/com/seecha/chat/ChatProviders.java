@@ -97,105 +97,53 @@ public final class ChatProviders {
         String category = pick < 18 ? TOPIC_CATEGORIES.get(pick / 3) : TOPIC_CATEGORIES.get(pick - 12);
         String prompt = """
                 시차(seecha)의 성인 익명 그룹 채팅에서 사용할 한국어 스토리형 대화 주제 1개를 생성하세요.
+                지정 주제는 ‘%s’입니다.
 
-                **지정 주제: %s**
+                시차의 목적은 서로 다른 환경과 경험을 가진 사람들이 같은 상황을 어떻게 받아들이는지 이야기하며, 각자의 판단이 어디에서 비롯됐는지 이해하는 것입니다.
 
-                시차는 서로 다른 환경과 경험을 가진 사람들이 같은 상황을 바라보며, 각자의 선택과 판단이 어디에서 비롯되는지 이해하는 서비스입니다.
+                스토리 구성
+                - 하나의 윤리적 딜레마 또는 가치관의 차이가 드러나는 상황을 4단계로 구성하세요.
+                - 1단계에서는 사건의 시작과 첫 번째 질문을 제시하세요.
+                - 2단계에서는 처음에는 알지 못했던 인물의 사정이나 경험을 공개하세요.
+                - 3단계에서는 또 다른 관점, 충돌하는 가치 또는 새로운 정보를 제시하세요.
+                - 4단계에서는 여러 시선을 접한 뒤 자신의 기준을 다시 생각할 수 있도록 하세요.
+                - 새로운 사실이 기존 사실을 부정하거나 특정 인물을 일방적인 악인으로 만들지 마세요.
+                - 정답, 합의, 반드시 생각을 바꿔야 한다는 결론을 요구하지 마세요.
 
-                목적은 정답을 찾거나 합의하는 것이 아니라 **서로 다른 관점을 발견하고 이해하는 것**입니다.
+                질문 생성 기준
+                - 현실에서 발생할 법한 윤리적 갈등과 사회적 이슈를 우선하고, 교과서적인 상황과 뻔한 해결책은 피하세요.
+                - 모든 질문을 ‘어떻게 조율하겠어요?’ 형태로 반복하지 마세요.
+                - 행동을 묻는 질문과 가치관·판단 기준을 묻는 질문을 자연스럽게 혼합하세요.
+                - 각 단계의 상황은 80~150자 내외, 최대 3문장으로 작성하세요.
+                - 각 질문은 해당 상황에 직접 연결되는 자연스러운 존댓말 한 문장으로 작성하세요.
+                - 회사나 업무는 ‘일’ 주제에서만 다루고, 학교 팀플과 마감 갈등은 제외하세요.
+                - 개인적 상처나 민감한 경험을 공개하지 않아도 대화할 수 있게 작성하세요.
 
-                ### 1. 스토리 구성
+                단계별 제목 생성 기준
+                - 4단계 모두 약 4~15자의 간결한 제목을 생성하세요.
+                - 각 제목은 해당 단계의 핵심 사건이나 관점을 자연스럽게 표현하세요.
+                - 제목만 읽어도 해당 단계의 이야기 소재를 짐작할 수 있게 하되, 다음 단계나 결말을 암시하지 마세요.
+                - ‘새로운 시선’, ‘또 다른 시선’, ‘확장된 판단’처럼 추상적인 제목을 반복하지 마세요.
+                - 각 제목에는 해당 이야기만의 인물, 사건, 입장 중 하나가 드러나야 합니다.
 
-                하나의 사건을 총 4단계로 구성하세요.
-
-                **1단계 — 사건의 시작**
-
-                - 현실에서 일어날 법한 구체적인 상황을 제시하세요.
-                - 참여자가 처음 느끼는 생각과 행동을 자유롭게 이야기할 수 있어야 합니다.
-                - 처음부터 모든 인물의 사정이나 사건의 전말을 공개하지 마세요.
-
-                **2단계 — 새로운 시선**
-
-                - 처음에는 알지 못했던 인물의 환경, 경험 또는 사정을 공개하세요.
-                - 기존 상황을 이해하는 데 새로운 관점을 제공해야 합니다.
-
-                **3단계 — 또 다른 시선**
-
-                - 다른 이해관계자의 입장이나 새로운 정보를 공개하세요.
-                - 앞서 제시한 시선과는 다른 가치를 생각해 볼 수 있도록 구성하세요.
-
-                **4단계 — 확장된 판단**
-
-                - 지금까지 드러난 여러 입장을 고려할 수 있는 새로운 상황을 제시하세요.
-                - 참여자가 자신의 판단을 유지하거나 바꾸거나 발전시킬 수 있어야 합니다.
-                - 반드시 타협하거나 하나의 결론에 도달하도록 유도하지 마세요.
-
-                ### 2. 상황 작성 규칙
-
-                - 각 단계의 상황 설명은 80~150자 내외, 최대 3문장으로 작성하세요.
-                - 인물 관계를 단순하고 명확하게 유지하세요.
-                - 갈등은 신뢰, 공정성, 자유, 책임, 배려 등 서로 다른 가치에서 비롯되어야 합니다.
-                - 각 인물의 행동에는 납득할 만한 이유가 있어야 합니다.
-                - 새로운 정보가 기존 사실을 뒤집거나 특정 인물을 갑자기 악인으로 만들지 않도록 하세요.
-                - 자극적인 반전보다 **미처 생각하지 못했던 타인의 삶과 관점을 발견하는 과정**에 집중하세요.
-                - 감정 해설이나 교훈을 길게 설명하지 말고 구체적인 사건으로 표현하세요.
-                - 실제 사회적 이슈, 세대 차이, 생활환경의 차이에서 소재를 찾되 특정 집단에 대한 편견을 강화하지 마세요.
-                - 회사와 업무를 배경으로 하는 상황은 '일' 주제에서만 사용하세요.
-                - 학교 팀플과 마감 갈등은 제외하세요.
-                - 뻔한 약속 갈등이나 반복적인 소재보다 새롭고 대화할 거리가 많은 상황을 우선하세요.
-
-                ### 3. 질문 작성 규칙
-
-                - 각 단계마다 질문을 정확히 1개 작성하세요.
-                - 질문은 해당 단계의 구체적인 상황과 연결되어야 합니다.
-                - '당신이라면 어떻게 하겠어요?'처럼 어디에나 적용되는 추상적인 질문은 피하세요.
-                - 참여자가 실제로 어떤 행동을 할지 이야기할 수 있도록 질문하세요.
-                - 특정 선택이나 도덕적인 정답을 유도하지 마세요.
-                - 질문을 반복하거나 찬반을 강요하지 마세요.
-                - 새로운 정보를 접한 후에도 기존 의견을 유지하는 것이 자연스럽도록 구성하세요.
-                - 모든 질문은 간결한 한 문장의 자연스러운 존댓말로 작성하세요.
-
-                ### 4. 문체
-
-                친구에게 실제 상황을 설명하듯 쉽고 자연스러운 한국어를 사용하세요.
-
-                불필요한 수식어, 복잡한 인물 관계, 장황한 설명, 과장된 표현을 피하세요.
-
-                참여자가 개인적인 상처나 민감한 경험을 공개하지 않아도 대화할 수 있어야 합니다.
-
-                ### 5. 출력 형식
-
-                반드시 다음 JSON 구조로만 응답하세요.
-                ```json
+                다음 JSON 객체 하나만 반환하세요. questions에는 정확히 3개의 객체가 필요합니다.
                 {
+                  "stageTitle": "1단계 제목",
                   "scenario": "1단계 상황",
-                  "mainQuestion": "1단계 메인 질문",
+                  "mainQuestion": "1단계 질문",
                   "questions": [
-                    {
-                      "scenario": "2단계에서 새롭게 공개되는 상황",
-                      "question": "2단계 보조질문"
-                    },
-                    {
-                      "scenario": "3단계에서 새롭게 공개되는 상황",
-                      "question": "3단계 보조질문"
-                    },
-                    {
-                      "scenario": "4단계에서 새롭게 공개되는 상황",
-                      "question": "4단계 보조질문"
-                    }
+                    {"title": "2단계 제목", "scenario": "2단계 추가 상황", "question": "2단계 질문"},
+                    {"title": "3단계 제목", "scenario": "3단계 추가 상황", "question": "3단계 질문"},
+                    {"title": "4단계 제목", "scenario": "4단계 추가 상황", "question": "4단계 질문"}
                   ]
                 }
-                ```
-
-                JSON 외의 제목, 설명, 해설, 번호, 정답 또는 마크다운 코드 블록을 출력하지 마세요.
-
-                출력 전 전체 스토리가 자연스럽게 연결되는지, 서로 다른 시선이 드러나는지, 특정 결론을 강요하지 않는지 검토하세요.
+                JSON 외의 내용은 출력하지 마세요. 마지막 단계 이후 추가 질문이나 설문을 생성하지 마세요.
                 """.formatted(category);
         var string = Map.of("type", "string");
-        var stage = Map.of("type", "object", "required", List.of("scenario", "question"),
-                "properties", Map.of("scenario", string, "question", string));
-        var schema = Map.of("type", "object", "required", List.of("scenario", "mainQuestion", "questions"),
-                "properties", Map.of("scenario", string, "mainQuestion", string, "questions",
+        var stage = Map.of("type", "object", "required", List.of("title", "scenario", "question"),
+                "properties", Map.of("title", string, "scenario", string, "question", string));
+        var schema = Map.of("type", "object", "required", List.of("stageTitle", "scenario", "mainQuestion", "questions"),
+                "properties", Map.of("stageTitle", string, "scenario", string, "mainQuestion", string, "questions",
                         Map.of("type", "array", "items", stage, "minItems", 3, "maxItems", 3)));
         var response = post("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent",
                 "x-goog-api-key", GEMINI_KEY, Duration.ofSeconds(30),
@@ -210,11 +158,15 @@ public final class ChatProviders {
                 generated.append(object.get("text").getAsString());
             }
         }
-        var result = JsonParser.parseString(generated.toString()).getAsJsonObject();
-        var questions = result.getAsJsonArray("questions");
-        if (questions.size() != 3) {
+        return parseStory(category, JsonParser.parseString(generated.toString()).getAsJsonObject());
+    }
+
+    static Topic parseStory(String category, JsonObject result) throws IOException {
+        var items = result.get("questions");
+        if (items == null || !items.isJsonArray() || items.getAsJsonArray().size() != 3) {
             throw new IOException("Unexpected Gemini topic shape");
         }
+        String openingTitle = validateTitle(result.get("stageTitle"));
         String scenario = validate(result.get("scenario"), 175);
         String mainQuestion = validate(result.get("mainQuestion"), 145);
         var opening = scenario + "\n\nQ. " + mainQuestion;
@@ -224,19 +176,33 @@ public final class ChatProviders {
         List<TopicStory.Stage> stages = new ArrayList<>(3);
         var questionTexts = new java.util.HashSet<String>();
         questionTexts.add(mainQuestion);
-        for (var item : questions) {
+        var titles = new java.util.HashSet<String>();
+        titles.add(openingTitle);
+        for (var item : items.getAsJsonArray()) {
             if (!item.isJsonObject()) {
                 throw new IOException("Invalid story stage");
             }
             var followUp = item.getAsJsonObject();
+            String title = validateTitle(followUp.get("title"));
+            if (!titles.add(title)) {
+                throw new IOException("Repeated story stage title");
+            }
             String stageScenario = validate(followUp.get("scenario"), 175);
             String question = validate(followUp.get("question"), 300);
             if (!TopicRules.eligible(stageScenario + "\n\nQ. " + question) || !questionTexts.add(question)) {
                 throw new IOException("Invalid or repeated story question");
             }
-            stages.add(new TopicStory.Stage(stageScenario, question));
+            stages.add(new TopicStory.Stage(stageScenario, question, title));
         }
-        return new Topic(category, new TopicStory(opening, stages));
+        return new Topic(category, new TopicStory(opening, category, "", openingTitle, stages));
+    }
+
+    private static String validateTitle(JsonElement element) throws IOException {
+        String title = validate(element, 15);
+        if (title.length() < 4 || title.lines().count() != 1) {
+            throw new IOException("Invalid story stage title");
+        }
+        return title;
     }
 
     private static String validate(JsonElement text, int limit) throws IOException {

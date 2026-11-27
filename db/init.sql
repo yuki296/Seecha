@@ -71,6 +71,10 @@ CREATE TABLE IF NOT EXISTS chat_topics (
     follow_up_title_one VARCHAR(60) NULL,
     follow_up_title_two VARCHAR(60) NULL,
     follow_up_title_three VARCHAR(60) NULL,
+    stage_title_one VARCHAR(60) NULL,
+    stage_title_two VARCHAR(60) NULL,
+    stage_title_three VARCHAR(60) NULL,
+    stage_title_four VARCHAR(60) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uq_chat_topic_scenario (scenario),
     KEY ix_chat_topic_category (category)

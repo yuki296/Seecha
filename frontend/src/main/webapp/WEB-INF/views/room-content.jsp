@@ -32,7 +32,7 @@
                         <c:forEach begin="1" end="4" var="step"><span aria-hidden="true"></span></c:forEach>
                     </div>
                     <section data-story-step="1">
-                        <header class="story-step-heading"><h4><c:out value="${room.openingTitle}"/></h4><span>1/4</span></header>
+                        <header class="story-step-heading"><span>1/4</span><h4><c:out value="${room.openingTitle}"/></h4></header>
                         <div class="story-scene">
                             <p><c:out value="${room.scenario}"/></p>
                             <p class="story-question"><c:out value="${room.mainQuestion}"/></p>
@@ -40,7 +40,7 @@
                     </section>
                     <c:forEach var="question" items="${room.questions}">
                         <section data-story-step="<c:out value='${question.number + 1}'/>" hidden>
-                            <header class="story-step-heading"><h4><c:out value="${question.title}"/></h4><span><c:out value="${question.number + 1}"/>/4</span></header>
+                            <header class="story-step-heading"><span><c:out value="${question.number + 1}"/>/4</span><h4><c:out value="${question.title}"/></h4></header>
                             <div class="story-scene">
                                 <c:if test="${not empty question.scenario}"><p><c:out value="${question.scenario}"/></p></c:if>
                                 <p class="story-question"><c:out value="${question.text}"/></p>

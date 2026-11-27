@@ -54,9 +54,9 @@ public final class RoomServlet extends HttpServlet {
                     Map.entry("mainQuestion", topic.length == 2 ? topic[1].strip() : "당신이라면 어떻게 행동하겠어요?"), Map.entry("questions", room.questions().stream()
                             .map(question -> Map.of("number", question.number(), "text", question.text(), "scenario", question.scenario(),
                                     "title", question.title().isBlank() ? switch (question.number()) {
-                                        case 1 -> "새로운 시선";
-                                        case 2 -> "또 다른 시선";
-                                        default -> "확장된 판단";
+                                        case 1 -> "두 번째 이야기";
+                                        case 2 -> "세 번째 이야기";
+                                        default -> "마지막 이야기";
                                     } : question.title(),
                                     "current", question.current())).toList()),
                     Map.entry("step", room.step()), Map.entry("revision", room.revision()),

@@ -14,7 +14,9 @@ public final class TopicDao {
     public List<TopicStory> recent() throws SQLException {
         String sql = """
                 SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three,
-                       category, story_title, opening_title, follow_up_title_one, follow_up_title_two, follow_up_title_three
+                       category, story_title, COALESCE(stage_title_one, opening_title),
+                       COALESCE(stage_title_two, follow_up_title_one), COALESCE(stage_title_three, follow_up_title_two),
+                       COALESCE(stage_title_four, follow_up_title_three)
                 FROM chat_topics ORDER BY topic_id DESC LIMIT 30
                 """;
         return load(sql);
@@ -30,7 +32,12 @@ public final class TopicDao {
                 statement.executeUpdate(new String(seed.readAllBytes(), StandardCharsets.UTF_8));
             }
         }
-        return load("SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three, category, story_title, opening_title, follow_up_title_one, follow_up_title_two, follow_up_title_three FROM manual_chat_topics");
+        return load("""
+                SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three, category, story_title, COALESCE(stage_title_one, opening_title),
+                       COALESCE(stage_title_two, follow_up_title_one), COALESCE(stage_title_three, follow_up_title_two),
+                       COALESCE(stage_title_four, follow_up_title_three)
+                FROM manual_chat_topics
+                """);
     }
 
     private List<TopicStory> load(String sql) throws SQLException {
@@ -76,7 +83,7 @@ public final class TopicDao {
         String sql = """
                 INSERT INTO chat_topics (category, scenario, question_one, question_two, question_three,
                                          follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three,
-                                         story_title, opening_title, follow_up_title_one, follow_up_title_two, follow_up_title_three)
+                                         story_title, stage_title_one, stage_title_two, stage_title_three, stage_title_four)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))
                 ON DUPLICATE KEY UPDATE topic_id = topic_id
                 """;

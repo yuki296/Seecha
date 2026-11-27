@@ -198,7 +198,7 @@
     background: #8972c0;
 }
 
-.story-step-heading, .story-nav {
+.story-nav {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -207,12 +207,14 @@
 
 .story-step-heading h4 {
     margin: 0;
-    font-size: 1rem;
+    font-size: clamp(1.1rem, 4.5vw, 1.35rem);
     font-weight: 750;
 }
 
 .story-step-heading span {
     color: var(--chat-muted);
+    font-size: .85rem;
+    font-variant-numeric: tabular-nums;
 }
 
 .story-scene {
