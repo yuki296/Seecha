@@ -41,7 +41,7 @@
     <c:url var="letterUrl" value="/assets/yuki-letter.png"/>
     <details class="developer-story">
         <summary>
-            <img src="<c:out value='${letterUrl}'/>" width="384" height="384" alt="">
+            <img src="<c:out value='${letterUrl}'/>" width="144" height="144" alt="">
             <span class="developer-story-preview">
                 <strong>Yuki가 전하는 이야기</strong>
                 <span class="developer-story-open">이야기 읽기 <span aria-hidden="true">›</span></span>

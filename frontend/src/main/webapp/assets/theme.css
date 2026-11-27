@@ -283,7 +283,7 @@ body {
 
 .developer-story summary img {
     flex: 0 0 auto;
-    width: clamp(3.25rem, 14vw, 3.75rem);
+    width: 2.75rem;
     height: auto;
 }
 
