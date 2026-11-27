@@ -38,8 +38,11 @@
     <button id="join" class="btn btn-dark w-100" hidden>매칭 신청</button>
     <button id="ready" class="btn btn-dark w-100" hidden>준비 완료</button>
     <button id="cancel" class="btn btn-outline-dark w-100 mt-2" hidden>매칭 취소</button>
+    <c:url var="charactersUrl" value="/assets/seecha-characters.png"/>
     <aside class="lobby-story" aria-labelledby="lobby-note-title">
         <h2 id="lobby-note-title">같은 상황,<br>다른 이유</h2>
+        <img class="lobby-characters" src="<c:out value='${charactersUrl}'/>"
+             width="960" height="320" alt="">
         <p>우리는 각자 살아온 시간만큼 다른 눈으로 세상을 봐요.</p>
         <p>같은 질문 앞에서, 내가 미처 보지 못한 누군가의 이유를 만나보세요.</p>
         <p class="lobby-story-close">생각이 달라도, 서로를 조금 더 이해할 수 있어요.</p>
