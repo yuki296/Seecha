@@ -163,36 +163,81 @@
 }
 
 .topic-card {
-    border: 1px solid #e4dcef;
-    border-radius: .85rem;
-    padding: .9rem 1rem;
+    display: grid;
+    gap: .85rem;
     line-height: 1.65;
     overflow-wrap: anywhere;
+    word-break: keep-all;
 }
 
-.topic-card section + section {
+.story-category,
+.story-reveal-note {
+    margin: 0;
+    color: var(--chat-muted);
+}
+
+.topic-card .story-title {
+    margin: 0;
+    font-size: clamp(1.35rem, 6vw, 1.85rem);
+    font-weight: 750;
+}
+
+.story-progress {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .3rem;
+}
+
+.story-progress span {
+    height: .35rem;
+    border-radius: 999px;
+    background: #eee9f4;
+}
+
+.story-progress .is-filled {
+    background: #8972c0;
+}
+
+.story-step-heading, .story-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: .5rem;
+}
+
+.story-step-heading h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 750;
+}
+
+.story-step-heading span {
+    color: var(--chat-muted);
+}
+
+.story-scene {
+    margin-top: .65rem;
+    padding: .9rem;
+    border-radius: .85rem;
+    background: #f5f1fa;
+}
+
+.story-scene p {
+    margin: 0;
+}
+
+.story-scene .story-question {
+    font-weight: 700;
+}
+
+.story-scene p + .story-question {
+    margin-top: .75rem;
+    padding-top: .75rem;
     border-top: 1px solid #e4dcef;
-    margin-top: .85rem;
-    padding-top: .85rem;
 }
 
-.topic-card h3 {
-    color: #615673;
-    font-size: .875rem;
-    margin-bottom: .35rem;
-}
-
-.topic-card p,
-.topic-card ol {
-    margin-bottom: 0;
-}
-
-.topic-card ol {
-    padding-inline-start: 1.25rem;
-}
-
-.topic-card li + li {
-    margin-top: .55rem;
+.story-nav .btn {
+    border-radius: 999px;
 }
 
 .participant-profile {

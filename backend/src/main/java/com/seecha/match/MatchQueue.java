@@ -153,9 +153,9 @@ public final class MatchQueue {
         List<RevealedQuestion> questions = new ArrayList<>();
         for (int index = member.firstVisibleQuestion; index <= group.questionIndex; index++) {
             var stage = group.topic.stages().get(index - 1);
-            questions.add(new RevealedQuestion(index, stage.scenario(), stage.question(), index == group.questionIndex));
+            questions.add(new RevealedQuestion(index, stage.scenario(), stage.question(), stage.title(), index == group.questionIndex));
         }
-        return new Room(false, group.topic.opening(), List.copyOf(questions),
+        return new Room(false, group.topic.opening(), group.topic.category(), group.topic.title(), group.topic.openingTitle(), List.copyOf(questions),
                 group.questionIndex + 1, Math.max(0, (group.startedAt + ROOM_MS - now + 999) / 1000), group.revision, group.roomKey,
                 group.members.values().stream().map(item -> new Participant(item.nickname, item.profile)).toList(),
                 group.messages.stream().filter(message -> message.sequence() >= member.visibleFrom).toList(),
@@ -363,13 +363,13 @@ public final class MatchQueue {
 
     public record Participant(String nickname, Profile profile) {}
 
-    public record RevealedQuestion(int number, String scenario, String text, boolean current) {}
+    public record RevealedQuestion(int number, String scenario, String text, String title, boolean current) {}
 
-    public record Room(boolean ended, String scenario, List<RevealedQuestion> questions, int step, long remainingSeconds,
+    public record Room(boolean ended, String scenario, String category, String storyTitle, String openingTitle, List<RevealedQuestion> questions, int step, long remainingSeconds,
                        long revision, long roomKey, List<Participant> participants, List<Message> messages,
                        int questionVotes, boolean questionVoted, int endVotes, boolean endVoted, String nickname, String endNotice) {
         static Room closed(String notice) {
-            return new Room(true, "", List.of(), 0, 0, 0, 0, List.of(), List.of(), 0, false, 0, false, "", notice);
+            return new Room(true, "", "", "", "", List.of(), 0, 0, 0, 0, List.of(), List.of(), 0, false, 0, false, "", notice);
         }
     }
 

@@ -25,34 +25,36 @@
                 <span aria-hidden="true">›</span>
             </button>
             <template data-content="topic">
-                <div class="topic-card">
-                    <section>
-                        <h3>상황</h3>
-                        <p><c:out value="${room.scenario}"/></p>
+                <div class="topic-card" data-story>
+                    <c:if test="${not empty room.category}"><p class="story-category"><c:out value="${room.category}"/></p></c:if>
+                    <c:if test="${not empty room.storyTitle}"><h3 class="story-title"><c:out value="${room.storyTitle}"/></h3></c:if>
+                    <div class="story-progress" role="progressbar" aria-label="보고 있는 이야기 단계" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1">
+                        <c:forEach begin="1" end="4" var="step"><span aria-hidden="true"></span></c:forEach>
+                    </div>
+                    <section data-story-step="1">
+                        <header class="story-step-heading"><h4><c:out value="${room.openingTitle}"/></h4><span>1/4</span></header>
+                        <div class="story-scene">
+                            <p><c:out value="${room.scenario}"/></p>
+                            <p class="story-question"><c:out value="${room.mainQuestion}"/></p>
+                        </div>
                     </section>
-                    <section>
-                        <h3>메인 질문</h3>
-                        <p><strong><c:out value="${room.mainQuestion}"/></strong></p>
-                    </section>
-                    <c:if test="${not empty room.questions}">
-                        <section>
-                            <h3>공개된 보조 질문</h3>
-                            <ol>
-                                <c:forEach var="question" items="${room.questions}">
-                                    <li value="<c:out value='${question.number}'/>">
-                                        <c:if test="${not empty question.scenario}">
-                                            <p class="mb-1"><c:out value="${question.scenario}"/></p>
-                                        </c:if>
-                                        <strong><c:out value="${question.text}"/></strong>
-                                    </li>
-                                </c:forEach>
-                            </ol>
+                    <c:forEach var="question" items="${room.questions}">
+                        <section data-story-step="<c:out value='${question.number + 1}'/>" hidden>
+                            <header class="story-step-heading"><h4><c:out value="${question.title}"/></h4><span><c:out value="${question.number + 1}"/>/4</span></header>
+                            <div class="story-scene">
+                                <c:if test="${not empty question.scenario}"><p><c:out value="${question.scenario}"/></p></c:if>
+                                <p class="story-question"><c:out value="${question.text}"/></p>
+                            </div>
                         </section>
+                    </c:forEach>
+                    <nav class="story-nav" aria-label="이야기 단계">
+                        <button class="btn btn-outline-dark" type="button" data-story-move="-1">이전</button>
+                        <button class="btn btn-dark" type="button" data-story-move="1">다음 이야기</button>
+                    </nav>
+                    <c:if test="${room.step lt 4}">
+                        <p class="story-reveal-note small text-body-secondary mt-2">아직 공개되지 않은 이야기는 참여자 전원이 동의하면 열려요.</p>
                     </c:if>
                 </div>
-                <c:if test="${room.step lt 4}">
-                    <p class="small text-body-secondary mt-2 mb-0">다음 보조 질문은 참여자 전원이 동의하면 공개돼요.</p>
-                </c:if>
             </template>
             <template data-content="people">
                 <ul class="list-group list-group-flush">

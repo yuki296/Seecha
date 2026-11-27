@@ -13,7 +13,8 @@ public final class TopicDao {
 
     public List<TopicStory> recent() throws SQLException {
         String sql = """
-                SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three
+                SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three,
+                       category, story_title, opening_title, follow_up_title_one, follow_up_title_two, follow_up_title_three
                 FROM chat_topics ORDER BY topic_id DESC LIMIT 30
                 """;
         return load(sql);
@@ -29,7 +30,7 @@ public final class TopicDao {
                 statement.executeUpdate(new String(seed.readAllBytes(), StandardCharsets.UTF_8));
             }
         }
-        return load("SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three FROM manual_chat_topics");
+        return load("SELECT scenario, question_one, question_two, question_three, follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three, category, story_title, opening_title, follow_up_title_one, follow_up_title_two, follow_up_title_three FROM manual_chat_topics");
     }
 
     private List<TopicStory> load(String sql) throws SQLException {
@@ -40,9 +41,11 @@ public final class TopicDao {
                 var stages = new ArrayList<TopicStory.Stage>(3);
                 for (int index = 0; index < 3; index++) {
                     stages.add(new TopicStory.Stage(java.util.Objects.toString(rows.getString(index + 5), ""),
-                            rows.getString(index + 2)));
+                            rows.getString(index + 2), java.util.Objects.toString(rows.getString(index + 11), "")));
                 }
-                topics.add(new TopicStory(rows.getString(1), stages));
+                topics.add(new TopicStory(rows.getString(1), rows.getString(8),
+                        java.util.Objects.toString(rows.getString(9), ""),
+                        java.util.Objects.toString(rows.getString(10), ""), stages));
             }
             return List.copyOf(topics);
         }
@@ -72,17 +75,21 @@ public final class TopicDao {
     public void save(String category, TopicStory topic) throws SQLException {
         String sql = """
                 INSERT INTO chat_topics (category, scenario, question_one, question_two, question_three,
-                                         follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                                         follow_up_scenario_one, follow_up_scenario_two, follow_up_scenario_three,
+                                         story_title, opening_title, follow_up_title_one, follow_up_title_two, follow_up_title_three)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))
                 ON DUPLICATE KEY UPDATE topic_id = topic_id
                 """;
         try (var connection = database.connect(); var statement = connection.prepareStatement(sql)) {
             statement.setString(1, category);
             statement.setString(2, topic.opening());
+            statement.setString(9, topic.title());
+            statement.setString(10, topic.openingTitle());
             for (int index = 0; index < topic.stages().size(); index++) {
                 var stage = topic.stages().get(index);
                 statement.setString(index + 3, stage.question());
                 statement.setString(index + 6, stage.scenario());
+                statement.setString(index + 11, stage.title());
             }
             statement.executeUpdate();
         }

@@ -11,6 +11,7 @@ const panelTitles = {menu: "채팅방 메뉴", topic: "현재 질문", people: "
 let activePanel;
 let lastPanelContent;
 let panelTrigger;
+let storyStep;
 
 const error = document.getElementById("chat-error");
 const connection = document.getElementById("chat-connection");
@@ -38,6 +39,31 @@ window.addEventListener("resize", fitChatToViewport);
 window.addEventListener("pageshow", fitChatToViewport);
 fitChatToViewport();
 
+function renderStory(move = 0) {
+    const story = panelBody.querySelector("[data-story]");
+    if (!story) return;
+    const steps = [...story.querySelectorAll("[data-story-step]")];
+    const last = steps.length - 1;
+    const saved = steps.findIndex(step => Number(step.dataset.storyStep) === storyStep);
+    const current = saved < 0 ? last : saved;
+    if (move > 0 && current === last && storyStep < 4) {
+        openPanel("question");
+        return;
+    }
+    const index = Math.min(last, Math.max(0, current + move));
+    storyStep = Number(steps[index].dataset.storyStep);
+    steps.forEach((step, position) => { step.hidden = index !== position; });
+    const progress = story.querySelector(".story-progress");
+    progress.setAttribute("aria-valuenow", storyStep);
+    [...progress.children].forEach((mark, position) => {
+        mark.classList.toggle("is-filled", position < storyStep);
+    });
+    story.querySelector('[data-story-move="-1"]').disabled = index === 0;
+    const next = story.querySelector('[data-story-move="1"]');
+    next.disabled = index === last && storyStep === 4;
+    next.textContent = index === last && storyStep < 4 ? "다음 이야기 요청" : "다음 이야기";
+}
+
 function syncPanel() {
     const state = document.getElementById("room-state");
     menuButton.textContent = state?.dataset.votes === "true" ? "메뉴 · 동의 요청" : "메뉴";
@@ -46,6 +72,7 @@ function syncPanel() {
     if (template && template.innerHTML !== lastPanelContent) {
         panelBody.replaceChildren(template.content.cloneNode(true));
         lastPanelContent = template.innerHTML;
+        if (activePanel === "topic") renderStory();
     }
 }
 
@@ -53,6 +80,7 @@ function openPanel(name, trigger) {
     if (!Object.hasOwn(panelTitles, name)) return;
     if (!panel.open) panelTrigger = trigger;
     activePanel = name;
+    if (name === "topic") storyStep = undefined;
     lastPanelContent = undefined;
     panelTitle.textContent = panelTitles[name];
     panelMenu.hidden = name !== "menu";
@@ -194,6 +222,8 @@ composer.addEventListener("submit", event => {
     submit("send", pendingMessage);
 });
 room.addEventListener("click", event => {
+    const step = event.target.closest("button[data-story-move]");
+    if (step) renderStory(Number(step.dataset.storyMove));
     const trigger = event.target.closest("button[data-panel]");
     if (trigger) openPanel(trigger.dataset.panel, trigger);
     const button = event.target.closest("button[data-action]");
