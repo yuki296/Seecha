@@ -28,26 +28,26 @@
     <h1 class="mt-4">매칭 대기실</h1>
     <p>서로 다른 배경의 참여자를 우선 연결해요.</p>
     <p id="error" class="alert alert-danger" role="alert" hidden></p>
-    <div class="border rounded p-3 my-4" aria-live="polite">
-        <p id="participants" class="fw-bold">대기실 상태를 확인하고 있어요.</p>
+    <div id="match-status" class="border rounded p-3 my-4" aria-live="polite" hidden>
+        <p id="participants" class="fw-bold mb-2"></p>
         <p id="timer"></p>
         <p id="readiness" class="mb-0"></p>
         <ul id="participant-statuses" class="list-group list-group-flush mt-2" hidden></ul>
     </div>
-    <p id="instruction" class="text-body-secondary"></p>
+    <p id="instruction" class="text-body-secondary" hidden></p>
     <button id="join" class="btn btn-dark w-100" hidden>매칭 신청</button>
     <button id="ready" class="btn btn-dark w-100" hidden>준비 완료</button>
     <button id="cancel" class="btn btn-outline-dark w-100 mt-2" hidden>매칭 취소</button>
-    <aside class="lobby-note" aria-labelledby="chat-guidelines-title">
-        <h2 id="chat-guidelines-title">대화 주의사항</h2>
-        <p>욕설이나 다른 사람을 비하하는 표현은 삼가 주세요. 생각이 달라도 서로 존중하며 이야기해 주세요.</p>
+    <aside class="lobby-story" aria-labelledby="lobby-note-title">
+        <h2 id="lobby-note-title">같은 상황,<br>다른 이유</h2>
+        <p>우리는 각자 살아온 시간만큼 다른 눈으로 세상을 봐요.</p>
+        <p>같은 질문 앞에서, 내가 미처 보지 못한 누군가의 이유를 만나보세요.</p>
+        <p class="lobby-story-close">생각이 달라도, 서로를 조금 더 이해할 수 있어요.</p>
     </aside>
-    <aside class="lobby-note" aria-labelledby="lobby-note-title">
-        <h2 id="lobby-note-title">같은 상황, 다른 이유</h2>
-        <p>살아온 환경과 경험이 다르면, 같은 상황에서도 서로 다른 선택을 할 수 있어요.</p>
-        <p>각자라면 어떻게 행동할지, 그 이유를 편하게 나눠보세요.</p>
-        <p><strong>서로의 생각이 다를 수 있음을 인정하고, 그 차이가 어디서 오는지 알아가는 대화예요.</strong></p>
-    </aside>
+    <p class="lobby-guideline">
+        <span aria-hidden="true">⚠︎</span>
+        <span>욕설이나 비하 표현은 삼가고, 서로의 생각을 존중해 주세요.</span>
+    </p>
 </main>
 </body>
 </html>

@@ -205,3 +205,50 @@ body {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+.lobby-story {
+    margin-top: 1.5rem;
+    padding: clamp(1.15rem, 5vw, 1.65rem);
+    border: 1px solid var(--seecha-line);
+    border-radius: 1.2rem;
+    background: radial-gradient(ellipse at 95% 10%, #f9e3ed, transparent 53%),
+                radial-gradient(ellipse at 100% 85%, #e1f1ec, transparent 49%), #f5effd;
+    line-height: 1.7;
+    word-break: keep-all;
+}
+
+.lobby-story h2 {
+    margin: 0 0 .85rem;
+    font-size: clamp(1.65rem, 6vw, 2.15rem);
+    font-weight: 750;
+    letter-spacing: -.055em;
+    line-height: 1.16;
+}
+
+.lobby-story p {
+    margin-bottom: .55rem;
+    color: var(--seecha-muted);
+    font-size: .9rem;
+}
+
+.lobby-story .lobby-story-close {
+    margin: .9rem 0 0;
+    color: var(--seecha-ink);
+    font-weight: 650;
+}
+
+.lobby-guideline {
+    display: flex;
+    align-items: baseline;
+    gap: .45rem;
+    margin: .9rem 0 0;
+    color: var(--seecha-muted);
+    font-size: .85rem;
+    line-height: 1.55;
+    word-break: keep-all;
+}
+
+.lobby-guideline > :first-child {
+    color: #805321;
+    font-weight: 700;
+}

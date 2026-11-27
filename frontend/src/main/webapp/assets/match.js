@@ -1,4 +1,5 @@
 const page = document.getElementById("matching");
+const matchStatus = document.getElementById("match-status");
 const participants = document.getElementById("participants");
 const participantStatuses = document.getElementById("participant-statuses");
 const timer = document.getElementById("timer");
@@ -17,13 +18,15 @@ function render(state) {
     snapshot = state;
     const waiting = state.state === "waiting";
     const started = state.state === "started";
+    matchStatus.hidden = !waiting && !started;
+    instruction.hidden = !waiting;
     join.hidden = waiting || started;
     ready.hidden = !waiting;
     cancel.hidden = !waiting && !started;
     ready.disabled = state.count < 2;
     ready.textContent = state.ready ? "준비 취소" : "준비 완료";
     cancel.textContent = started ? "나가기" : "매칭 취소";
-    participants.textContent = state.count ? `참여자 ${state.count} / ${page.dataset.capacity}명` : "매칭을 신청해 주세요.";
+    participants.textContent = state.count ? `참여자 ${state.count} / ${page.dataset.capacity}명` : "";
     const minutes = String(Math.floor(state.remainingSeconds / 60)).padStart(2, "0");
     const seconds = String(state.remainingSeconds % 60).padStart(2, "0");
     timer.textContent = waiting && state.count >= 2 ? `남은 시간 ${minutes}:${seconds}` : "";
