@@ -4,8 +4,7 @@ import java.util.regex.Pattern;
 
 public final class TopicRules {
     private static final Pattern EXCLUDED_SCENARIO = Pattern.compile(
-            "팀\\s*(?:플|프로젝트|과제)|조별\\s*(?:과제|활동|프로젝트)|마감.{0,20}(?:갈등|임박|직전)"
-                    + "|토론해\\s*봅시다|(?:옳은지|할지).{0,60}(?:아니면|또는)");
+            "토론해\\s*봅시다|(?:옳은지|할지).{0,60}(?:아니면|또는)");
     private static final Pattern GENERIC_QUESTION = Pattern.compile(
             "(?:(?:당신(?:이라면|은)|이\\s*상황에서)\\s*){0,2}"
                     + "(?:어떻게\\s*(?:행동하|하|대처하|대응하)|어떤\\s*(?:선택을\\s*하|결정을\\s*내리))"
