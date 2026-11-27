@@ -16,7 +16,7 @@ import java.util.Set;
 
 @WebFilter("/*")
 public final class RequestSecurityFilter implements Filter {
-    private static final Set<String> PUBLIC_GET = Set.of("", "/", "/auth/login", "/auth/register", "/assets/match.js", "/assets/room.js", "/assets/room.css", "/assets/theme.css", "/assets/seecha-characters.png");
+    private static final Set<String> PUBLIC_GET = Set.of("", "/", "/auth/login", "/auth/register", "/assets/match.js", "/assets/room.js", "/assets/room.css", "/assets/theme.css", "/assets/seecha-characters.png", "/assets/yuki-letter.png");
     private static final Set<String> PUBLIC_POST = Set.of("/auth/login", "/auth/register");
     private static final Set<String> PRIVATE_GET = Set.of(
             "/profile", "/mypage", "/match", "/room", "/api/match/status", "/api/room/view");

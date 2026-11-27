@@ -268,14 +268,46 @@ body {
 }
 
 .developer-story summary {
-    padding: .75rem .9rem;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .65rem .8rem;
     color: var(--seecha-ink);
-    font-weight: 650;
     cursor: pointer;
+    list-style: none;
 }
 
-.developer-story summary::marker {
+.developer-story summary::-webkit-details-marker {
+    display: none;
+}
+
+.developer-story summary img {
+    flex: 0 0 auto;
+    width: clamp(4rem, 20vw, 5.75rem);
+    height: auto;
+}
+
+.developer-story-preview {
+    display: grid;
+    gap: .25rem;
+    font-size: .85rem;
+    line-height: 1.4;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
+.developer-story-preview strong {
+    font-size: 1rem;
+}
+
+.developer-story-open, .developer-story-close {
     color: var(--seecha-accent);
+    font-weight: 700;
+}
+
+.developer-story:not([open]) .developer-story-close,
+.developer-story[open] .developer-story-open {
+    display: none;
 }
 
 .developer-story-content {

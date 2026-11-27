@@ -38,17 +38,17 @@
     <button id="join" class="btn btn-dark w-100" hidden>매칭 신청</button>
     <button id="ready" class="btn btn-dark w-100" hidden>준비 완료</button>
     <button id="cancel" class="btn btn-outline-dark w-100 mt-2" hidden>매칭 취소</button>
-    <c:url var="charactersUrl" value="/assets/seecha-characters.png"/>
-    <aside class="lobby-story" aria-labelledby="lobby-note-title">
-        <h2 id="lobby-note-title">같은 상황,<br>다른 이유</h2>
-        <img class="lobby-characters" src="<c:out value='${charactersUrl}'/>"
-             width="960" height="320" alt="">
-        <p>우리는 각자 살아온 시간만큼 다른 눈으로 세상을 봐요.</p>
-        <p>같은 질문 앞에서, 내가 미처 보지 못한 누군가의 이유를 만나보세요.</p>
-        <p class="lobby-story-close">생각이 달라도, 서로를 조금 더 이해할 수 있어요.</p>
-    </aside>
+    <c:url var="letterUrl" value="/assets/yuki-letter.png"/>
     <details class="developer-story">
-        <summary>개발자의 이야기</summary>
+        <summary>
+            <img src="<c:out value='${letterUrl}'/>" width="384" height="384" alt="">
+            <span class="developer-story-preview">
+                <strong>Yuki가 전하는 이야기</strong>
+                <span>“어떻게 저렇게 생각할 수 있지?” 시차는 이 질문에서 시작됐어요.</span>
+                <span class="developer-story-open">이야기 읽기 <span aria-hidden="true">›</span></span>
+                <span class="developer-story-close">이야기 접기</span>
+            </span>
+        </summary>
         <div class="developer-story-content">
             <p>안녕하세요. 시차를 만든 Yuki입니다.</p>
             <p>여러분은 누군가의 이야기를 듣고 <strong>"어떻게 저렇게 생각할 수 있지?"</strong> 하고 느껴본 적이 있으신가요?</p>
@@ -66,6 +66,15 @@
             <p>이것이 제가 시차를 만든 이유입니다.</p>
         </div>
     </details>
+    <c:url var="charactersUrl" value="/assets/seecha-characters.png"/>
+    <aside class="lobby-story" aria-labelledby="lobby-note-title">
+        <h2 id="lobby-note-title">같은 상황,<br>다른 이유</h2>
+        <img class="lobby-characters" src="<c:out value='${charactersUrl}'/>"
+             width="960" height="320" alt="">
+        <p>우리는 각자 살아온 시간만큼 다른 눈으로 세상을 봐요.</p>
+        <p>같은 질문 앞에서, 내가 미처 보지 못한 누군가의 이유를 만나보세요.</p>
+        <p class="lobby-story-close">생각이 달라도, 서로를 조금 더 이해할 수 있어요.</p>
+    </aside>
     <p class="lobby-guideline">
         <span aria-hidden="true">⚠︎</span>
         <span>욕설이나 비하 표현은 삼가고, 서로의 생각을 존중해 주세요.</span>
