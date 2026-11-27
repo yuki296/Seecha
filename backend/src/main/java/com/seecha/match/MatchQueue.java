@@ -260,18 +260,25 @@ public final class MatchQueue {
     private void advance(long now) {
         ended.values().removeIf(room -> now - room.endedAt() >= ROOM_MS);
         groups.removeIf(group -> {
-            if (group.startedAt != 0) {
-                boolean everyoneInactive = group.members.values().stream()
-                        .allMatch(member -> now - member.lastSeen >= INACTIVE_MS);
-                if (!everyoneInactive && now - group.startedAt < ROOM_MS) {
-                    return false;
-                }
-                finish(group, now);
-                return true;
-            }
             var expired = group.members.entrySet().stream()
                     .filter(entry -> now - entry.getValue().lastSeen >= INACTIVE_MS)
                     .map(Map.Entry::getKey).toList();
+            if (group.startedAt != 0) {
+                if (expired.size() == group.members.size() || now - group.startedAt >= ROOM_MS) {
+                    finish(group, now);
+                    return true;
+                }
+                boolean hadVote = !group.questionVotes.isEmpty() || !group.endVotes.isEmpty();
+                for (long id : expired) {
+                    String nickname = group.members.get(id).nickname;
+                    remove(group, id);
+                    append(group, null, nickname + "님의 연결이 끊겨 퇴장했어요.", now);
+                }
+                if (!expired.isEmpty() && hadVote) {
+                    append(group, null, "참여자가 바뀌어 진행 중이던 투표가 취소됐어요.", now);
+                }
+                return false;
+            }
             expired.forEach(id -> remove(group, id));
             if (group.members.size() >= 2 && now >= group.deadline) {
                 start(group, now);
