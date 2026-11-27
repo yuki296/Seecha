@@ -15,8 +15,8 @@ final class ProfileForm {
     private static final List<String> STAGES = List.of("대학생", "대학원생", "취준생", "직장인", "알바생", "자영업자/프리랜서", "기타");
     private static final List<String> MBTIS = List.of("모름", "ISTJ", "ISFJ", "INFJ", "INTJ", "ISTP", "ISFP", "INFP",
             "INTP", "ESTP", "ESFP", "ENFP", "ENTP", "ESTJ", "ESFJ", "ENFJ", "ENTJ");
-    private static final List<String> FIELDS = List.of("IT/공학", "인문/사회", "경영/경제", "예술/디자인",
-            "의료/보건", "교육", "서비스직", "기타");
+    private static final List<String> FIELDS = List.of("IT·공학·기술", "인문·사회", "경영·경제·마케팅",
+            "예술·디자인·콘텐츠", "의료·보건·복지", "교육·연구", "서비스·판매·외식", "공공·안전·법률", "기타");
     private ProfileForm() {}
 
     static Profile read(HttpServletRequest request) {

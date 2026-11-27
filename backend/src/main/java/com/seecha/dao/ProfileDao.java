@@ -41,5 +41,20 @@ public final class ProfileDao {
         }
     }
 
-    public record Profile(String ageGroup, String childhoodRegion, String lifeStage, String mbti, String field) {}
+    public record Profile(String ageGroup, String childhoodRegion, String lifeStage, String mbti, String field) {
+        public Profile {
+            if (field != null) {
+                field = switch (field) {
+                    case "IT/공학" -> "IT·공학·기술";
+                    case "인문/사회" -> "인문·사회";
+                    case "경영/경제" -> "경영·경제·마케팅";
+                    case "예술/디자인" -> "예술·디자인·콘텐츠";
+                    case "의료/보건" -> "의료·보건·복지";
+                    case "교육" -> "교육·연구";
+                    case "서비스직" -> "서비스·판매·외식";
+                    default -> field;
+                };
+            }
+        }
+    }
 }
