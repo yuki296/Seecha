@@ -16,7 +16,7 @@ final class ProfileForm {
     private static final List<String> MBTIS = List.of("모름", "ISTJ", "ISFJ", "INFJ", "INTJ", "ISTP", "ISFP", "INFP",
             "INTP", "ESTP", "ESFP", "ENFP", "ENTP", "ESTJ", "ESFJ", "ENFJ", "ENTJ");
     private static final List<String> FIELDS = List.of("IT/공학", "인문/사회", "경영/경제", "예술/디자인",
-            "의료/보건", "교육", "기타");
+            "의료/보건", "교육", "서비스직", "기타");
     private ProfileForm() {}
 
     static Profile read(HttpServletRequest request) {
