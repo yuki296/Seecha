@@ -1,6 +1,7 @@
 package com.seecha.match;
 
 import com.seecha.chat.TopicRules;
+import com.seecha.chat.TopicStory;
 import com.seecha.dao.ProfileDao.Profile;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public final class MatchQueue {
     private final Map<Long, Group> memberships = new HashMap<>();
     private long nextRevision;
     private final Map<Long, ClosedRoom> ended = new HashMap<>();
-    private static final List<List<String>> TOPICS = List.of(
+    private static final List<TopicStory> TOPICS = List.of(
             List.of("친구가 중요한 실수를 했다는 걸 알게 됐어요. 당신이라면 친구에게 어떻게 말할 건가요?",
                     "다른 사람이 이미 알고 있다면 어떻게 할 건가요?",
                     "친구가 먼저 의견을 물으면 어떻게 답할 건가요?",
@@ -38,22 +39,22 @@ public final class MatchQueue {
             List.of("아파트 복도에 이웃이 유모차를 두기 시작했어요. 이웃은 집 안에 둘 곳이 없다고 하지만, 그 때문에 당신은 장바구니를 들고 지나다니기 불편해졌어요. 어떻게 해결하고 싶나요?",
                     "이웃이 일주일 뒤까지만 양해해 달라고 한다면 어떻게 답할 건가요?",
                     "다른 이웃이 단체 채팅방에 바로 문제를 올리자고 한다면 어떻게 행동할 건가요?",
-                    "공용 보관 공간을 만들려면 주민 모두 조금씩 비용을 내야 한다면 어떤 제안을 할 건가요?"));
+                    "공용 보관 공간을 만들려면 주민 모두 조금씩 비용을 내야 한다면 어떤 제안을 할 건가요?")).stream().map(TopicStory::legacy).toList();
     private int topicCursor;
-    private List<List<String>> availableTopics = TOPICS;
+    private List<TopicStory> availableTopics = TOPICS;
 
     public synchronized void tick(long now) {
         advance(now);
     }
 
-    public synchronized void useTopics(List<List<String>> topics) {
+    public synchronized void useTopics(List<TopicStory> topics) {
         var mixed = new ArrayList<>(new java.util.LinkedHashSet<>(TOPICS));
-        topics.stream().filter(topic -> TopicRules.eligible(topic.get(0)))
+        topics.stream().filter(topic -> TopicRules.eligible(topic.opening()))
                 .filter(topic -> !mixed.contains(topic)).forEach(mixed::add);
         useManualTopics(mixed);
     }
 
-    public synchronized void useManualTopics(List<List<String>> topics) {
+    public synchronized void useManualTopics(List<TopicStory> topics) {
         var shuffled = new ArrayList<>(topics.isEmpty() ? TOPICS : topics);
         java.util.Collections.shuffle(shuffled);
         availableTopics = List.copyOf(shuffled);
@@ -151,9 +152,10 @@ public final class MatchQueue {
         member.lastSeen = now;
         List<RevealedQuestion> questions = new ArrayList<>();
         for (int index = member.firstVisibleQuestion; index <= group.questionIndex; index++) {
-            questions.add(new RevealedQuestion(index, group.topic.get(index), index == group.questionIndex));
+            var stage = group.topic.stages().get(index - 1);
+            questions.add(new RevealedQuestion(index, stage.scenario(), stage.question(), index == group.questionIndex));
         }
-        return new Room(false, group.topic.get(0), List.copyOf(questions),
+        return new Room(false, group.topic.opening(), List.copyOf(questions),
                 group.questionIndex + 1, Math.max(0, (group.startedAt + ROOM_MS - now + 999) / 1000), group.revision, group.roomKey,
                 group.members.values().stream().map(item -> new Participant(item.nickname, item.profile)).toList(),
                 group.messages.stream().filter(message -> message.sequence() >= member.visibleFrom).toList(),
@@ -323,7 +325,7 @@ public final class MatchQueue {
         long revision;
         long nextMessage = 1;
         int questionIndex;
-        List<String> topic;
+        TopicStory topic;
         final List<Message> messages = new ArrayList<>();
         final java.util.Set<Long> questionVotes = new java.util.HashSet<>();
         final java.util.Set<Long> endVotes = new java.util.HashSet<>();
@@ -354,7 +356,7 @@ public final class MatchQueue {
 
     public record Participant(String nickname, Profile profile) {}
 
-    public record RevealedQuestion(int number, String text, boolean current) {}
+    public record RevealedQuestion(int number, String scenario, String text, boolean current) {}
 
     public record Room(boolean ended, String scenario, List<RevealedQuestion> questions, int step, long remainingSeconds,
                        long revision, long roomKey, List<Participant> participants, List<Message> messages,

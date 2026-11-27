@@ -40,3 +40,5 @@ Eclipse의 Tomcat이 실행 중일 때 Chrome 일반 창과 시크릿 창에서 
 - `frontend/src/main/webapp`에는 JSP 화면과 CSS·JavaScript가 있습니다.
 - `backend/src/main/java`에는 서버 코드가, `backend/src/main/resources`에는 수동 주제 SQL이 있습니다.
 - `db/init.sql`은 초기 DB 스키마입니다. 두 소스 폴더는 하나의 `seecha.war`로 빌드됩니다.
+
+기존 MySQL 설치에서는 새 스토리형 빌드를 실행하기 전에 `db/add-story-stages.sql`을 DB 관리자 계정으로 적용합니다. 기존 질문은 보존됩니다.

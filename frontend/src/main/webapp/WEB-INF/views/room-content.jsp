@@ -39,7 +39,12 @@
                             <h3>공개된 보조 질문</h3>
                             <ol>
                                 <c:forEach var="question" items="${room.questions}">
-                                    <li value="<c:out value='${question.number}'/>"><c:out value="${question.text}"/></li>
+                                    <li value="<c:out value='${question.number}'/>">
+                                        <c:if test="${not empty question.scenario}">
+                                            <p class="mb-1"><c:out value="${question.scenario}"/></p>
+                                        </c:if>
+                                        <strong><c:out value="${question.text}"/></strong>
+                                    </li>
                                 </c:forEach>
                             </ol>
                         </section>

@@ -50,7 +50,7 @@ public final class RoomServlet extends HttpServlet {
             request.setAttribute("room", Map.ofEntries(
                     Map.entry("scenario", topic[0].strip()),
                     Map.entry("mainQuestion", topic.length == 2 ? topic[1].strip() : "당신이라면 어떻게 행동하겠어요?"), Map.entry("questions", room.questions().stream()
-                            .map(question -> Map.of("number", question.number(), "text", question.text(),
+                            .map(question -> Map.of("number", question.number(), "text", question.text(), "scenario", question.scenario(),
                                     "current", question.current())).toList()),
                     Map.entry("step", room.step()), Map.entry("revision", room.revision()),
                     Map.entry("roomKey", room.roomKey()),

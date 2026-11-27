@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @WebListener
 public final class ChatLifecycle implements ServletContextListener {
     private final TopicDao topics = new TopicDao();
-    private List<List<String>> manualTopics = List.of();
+    private List<TopicStory> manualTopics = List.of();
     private ScheduledExecutorService housekeeping;
     private ScheduledExecutorService topicWorker;
 
@@ -47,7 +47,7 @@ public final class ChatLifecycle implements ServletContextListener {
     private void refreshTopics(ServletContextEvent event) {
         try {
             var topic = ChatProviders.generate();
-            topics.save(topic.category(), topic.text());
+            topics.save(topic.category(), topic.story());
             MatchQueue.INSTANCE.useTopics(topics.recent());
         } catch (IOException | SQLException | RuntimeException exception) {
             MatchQueue.INSTANCE.useManualTopics(manualTopics);

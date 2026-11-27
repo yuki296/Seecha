@@ -78,160 +78,107 @@ public final class ChatProviders {
         int pick = ThreadLocalRandom.current().nextInt(20);
         String category = pick < 18 ? TOPIC_CATEGORIES.get(pick / 3) : TOPIC_CATEGORIES.get(pick - 12);
         String prompt = """
-                시차(seecha)의 성인 익명 그룹 채팅에서 사용할 **한국어 상황판단형 대화 주제 1개**를 생성하세요.
+                시차(seecha)의 성인 익명 그룹 채팅에서 사용할 한국어 스토리형 대화 주제 1개를 생성하세요.
 
                 **지정 주제: %s**
 
-                시차는 서로 다른 배경의 사람들이 동일한 상황에서 어떤 행동을 선택하고, 왜 그렇게 판단하는지 자유롭게 이야기하는 서비스입니다.
+                시차는 서로 다른 환경과 경험을 가진 사람들이 같은 상황을 바라보며, 각자의 선택과 판단이 어디에서 비롯되는지 이해하는 서비스입니다.
 
-                상황판단검사(SJT)의 형식을 참고하되, 참여자의 성격이나 판단 능력을 평가하거나 특정 정답과 합의를 요구하지 마세요.
+                목적은 정답을 찾거나 합의하는 것이 아니라 **서로 다른 관점을 발견하고 이해하는 것**입니다.
 
-                ## 1. 주제 및 소재 선정
+                ### 1. 스토리 구성
 
-                지정 주제에 어울리는 자연스러운 인물, 관계, 장소를 활용하세요.
+                하나의 사건을 총 4단계로 구성하세요.
 
-                다음은 소재의 방향을 보여주는 예시입니다. 예시를 그대로 복제하지 말고 새로운 장면과 갈등을 만드세요.
+                **1단계 — 사건의 시작**
 
-                - **우정:** 친구 사이의 신뢰, 솔직함, 배려, 금전 문제, 관계의 거리감
-                - **가족:** 가족의 기대와 개인의 자유, 사생활, 책임, 생활 방식의 차이
-                - **연애:** 연인 사이의 신뢰, 개인의 시간, 소비 방식, 이성 친구, 사생활
-                - **이웃·일상:** 공공장소에서의 배려, 생활 규칙, 이웃 간 갈등, 공동 공간, 취미 모임
-                - **일:** 업무 역량, 직장 내 인간관계, 공정한 평가, 책임, 고객 응대, 조직문화
+                - 현실에서 일어날 법한 구체적인 상황을 제시하세요.
+                - 참여자가 처음 느끼는 생각과 행동을 자유롭게 이야기할 수 있어야 합니다.
+                - 처음부터 모든 인물의 사정이나 사건의 전말을 공개하지 마세요.
 
-                회사나 업무를 배경으로 한 상황은 '일' 주제에서만 작성하세요.
+                **2단계 — 새로운 시선**
 
-                학교 팀 프로젝트, 팀플 및 마감 갈등을 모든 주제에서 제외하세요.
+                - 처음에는 알지 못했던 인물의 환경, 경험 또는 사정을 공개하세요.
+                - 기존 상황을 이해하는 데 새로운 관점을 제공해야 합니다.
 
-                같은 소재나 갈등 구조를 반복하지 말고, 인물의 관계와 사건, 선택의 결과가 기존 질문과 구별되는 새로운 상황을 만드세요.
+                **3단계 — 또 다른 시선**
 
-                ## 2. 상황 작성 규칙 — scenario
+                - 다른 이해관계자의 입장이나 새로운 정보를 공개하세요.
+                - 앞서 제시한 시선과는 다른 가치를 생각해 볼 수 있도록 구성하세요.
 
-                - 공백 포함 **100~160자 내외**, 최대 3문장으로 작성하세요.
-                - 첫 문장에서 인물과 배경을 소개하고, 이후 핵심 사건과 갈등을 설명하세요.
-                - 한 문장은 가급적 60자를 넘기지 마세요.
-                - 주요 인물은 2~3명 이내로 제한하세요.
-                - 한 상황에는 하나의 핵심 갈등만 담으세요.
-                - 인물 간 관계가 복잡해지지 않도록 누구의 행동인지 명확하게 작성하세요.
-                - 현실에서 충분히 발생할 법한 구체적인 상황이어야 합니다.
-                - 신뢰, 배려, 책임, 공정성, 개인의 이익 등 서로 충돌하는 가치가 자연스럽게 드러나야 합니다.
-                - 여러 행동에 각각 납득할 만한 이유가 존재해야 합니다.
-                - 어느 한쪽이 명백히 잘못했거나 특정 행동만 정답으로 보이는 상황은 피하세요.
-                - 상황 설명에 불필요한 감정 해설이나 교훈을 넣지 마세요.
-                - 마지막 문장에서 해결 방법이나 선택지를 제시하지 마세요.
-                - 상황과 메인 질문만 읽어도 바로 대화를 시작할 수 있도록 작성하세요.
+                **4단계 — 확장된 판단**
 
-                **피해야 할 표현**
+                - 지금까지 드러난 여러 입장을 고려할 수 있는 새로운 상황을 제시하세요.
+                - 참여자가 자신의 판단을 유지하거나 바꾸거나 발전시킬 수 있어야 합니다.
+                - 반드시 타협하거나 하나의 결론에 도달하도록 유도하지 마세요.
 
-                - "어떤 결정을 내려야 할지 고민이 깊어집니다."
-                - "두 사람 모두에게 상처를 주지 않는 방법을 찾아야 합니다."
-                - "계속 함께할지, 관계를 끊을지 선택해야 합니다."
-                - "공정성과 인간관계 사이에서 갈등하고 있습니다."
+                ### 2. 상황 작성 규칙
 
-                감정을 직접 해설하거나 선택을 양자택일로 제한하지 말고, 구체적인 사건을 통해 갈등을 보여주세요.
+                - 각 단계의 상황 설명은 80~150자 내외, 최대 3문장으로 작성하세요.
+                - 인물 관계를 단순하고 명확하게 유지하세요.
+                - 갈등은 신뢰, 공정성, 자유, 책임, 배려 등 서로 다른 가치에서 비롯되어야 합니다.
+                - 각 인물의 행동에는 납득할 만한 이유가 있어야 합니다.
+                - 새로운 정보가 기존 사실을 뒤집거나 특정 인물을 갑자기 악인으로 만들지 않도록 하세요.
+                - 자극적인 반전보다 **미처 생각하지 못했던 타인의 삶과 관점을 발견하는 과정**에 집중하세요.
+                - 감정 해설이나 교훈을 길게 설명하지 말고 구체적인 사건으로 표현하세요.
+                - 실제 사회적 이슈, 세대 차이, 생활환경의 차이에서 소재를 찾되 특정 집단에 대한 편견을 강화하지 마세요.
+                - 회사와 업무를 배경으로 하는 상황은 '일' 주제에서만 사용하세요.
+                - 학교 팀플과 마감 갈등은 제외하세요.
+                - 뻔한 약속 갈등이나 반복적인 소재보다 새롭고 대화할 거리가 많은 상황을 우선하세요.
 
-                ## 3. 메인 질문 작성 규칙 — mainQuestion
+                ### 3. 질문 작성 규칙
 
-                메인 질문은 **상황의 핵심 갈등을 반영한 구체적이고 열린 행동 질문**으로 작성하세요.
+                - 각 단계마다 질문을 정확히 1개 작성하세요.
+                - 질문은 해당 단계의 구체적인 상황과 연결되어야 합니다.
+                - '당신이라면 어떻게 하겠어요?'처럼 어디에나 적용되는 추상적인 질문은 피하세요.
+                - 참여자가 실제로 어떤 행동을 할지 이야기할 수 있도록 질문하세요.
+                - 특정 선택이나 도덕적인 정답을 유도하지 마세요.
+                - 질문을 반복하거나 찬반을 강요하지 마세요.
+                - 새로운 정보를 접한 후에도 기존 의견을 유지하는 것이 자연스럽도록 구성하세요.
+                - 모든 질문은 간결한 한 문장의 자연스러운 존댓말로 작성하세요.
 
-                - 참여자가 실제로 어떤 행동을 할지 묻는 한 문장으로 작성하세요.
-                - 상황에 등장하는 인물, 관계 또는 갈등의 대상을 자연스럽게 포함하세요.
-                - 질문만 읽어도 어떤 상황에 대한 이야기인지 어느 정도 파악할 수 있어야 합니다.
-                - 특정 해결 방법을 전제하거나 유도하지 마세요.
-                - 두 가지 선택지만 제시하는 양자택일 질문을 피하세요.
-                - 참여자가 자신만의 행동이나 해결 방법을 자유롭게 제안할 수 있도록 작성하세요.
-                - 단순히 옳고 그름이나 찬반을 묻지 마세요.
-                - 구체적이면서도 간결한 존댓말을 사용하세요.
-                - 질문이 불필요하게 길어지지 않도록 작성하세요.
+                ### 4. 문체
 
-                **사용하지 말아야 할 질문**
+                친구에게 실제 상황을 설명하듯 쉽고 자연스러운 한국어를 사용하세요.
 
-                - "당신이라면 어떻게 하시겠습니까?"
-                - "당신은 어떤 선택을 내리겠습니까?"
-                - "어떤 결정이 가장 옳다고 생각하시나요?"
-                - "이 상황에서 어떻게 하는 것이 바람직할까요?"
-                - "친구를 도울까요, 아니면 거절할까요?"
+                불필요한 수식어, 복잡한 인물 관계, 장황한 설명, 과장된 표현을 피하세요.
 
-                **좋은 메인 질문 예시**
+                참여자가 개인적인 상처나 민감한 경험을 공개하지 않아도 대화할 수 있어야 합니다.
 
-                - 일: "당신이 팀장이라면 이 직원의 업무 문제를 어떻게 처리하겠어요?"
-                - 우정: "친구가 다른 사람의 비밀을 알려달라고 한다면 어떻게 대응하겠어요?"
-                - 가족: "가족이 자신의 사생활에 계속 관여한다면 어떤 방식으로 이야기하겠어요?"
-                - 연애: "연인과 소비 방식이 다를 때 데이트 비용을 어떻게 조율하겠어요?"
-                - 이웃·일상: "영화관에서 다른 사람이 좌석 교환을 부탁한다면 어떻게 대응하겠어요?"
+                ### 5. 출력 형식
 
-                위 예시의 문장을 그대로 반복하지 말고, 생성한 상황에 맞는 새로운 질문을 작성하세요.
-
-                ## 4. 보조질문 작성 규칙 — questions
-
-                보조질문은 정확히 **3개** 작성하세요.
-
-                메인 질문 이후 하나씩 공개되며, 참여자가 기존 판단을 다른 관점에서 다시 생각하도록 만드는 역할입니다.
-
-                - 각 보조질문은 새로운 정보, 조건 또는 입장을 하나씩 추가하세요.
-                - 세 질문은 서로 다른 방향으로 사고를 확장해야 합니다.
-                - 첫 번째 보조질문에 대한 답변이 두 번째 또는 세 번째 질문의 전제가 되어서는 안 됩니다.
-                - 메인 질문을 단순히 다른 말로 반복하지 마세요.
-                - 각각 한 문장으로 간결하게 작성하세요.
-                - 특정 선택을 정답으로 유도하지 마세요.
-                - 가정이 추가되었을 때 참여자가 실제로 어떻게 행동할지를 묻는 질문을 우선하세요.
-
-                보조질문은 가능하면 다음 관점을 각각 활용하세요.
-
-                1. **관계의 변화:** 상대방과의 친밀도, 신뢰 또는 관계가 달라지는 경우
-                2. **상황의 변화:** 비용, 시간, 책임 또는 새로운 사실이 추가되는 경우
-                3. **입장의 변화:** 다른 이해관계자의 입장이나 선택에 따른 영향이 드러나는 경우
-
-                단, 위 순서는 필수가 아니며 상황에 적합한 서로 다른 관점으로 구성하세요.
-
-                ## 5. 문체 및 가독성
-
-                - 친구에게 실제 상황을 설명하듯 자연스럽고 명확한 한국어를 사용하세요.
-                - 모든 문장은 존댓말로 작성하세요.
-                - 불필요한 수식어와 장황한 배경 설명을 제거하세요.
-                - '파트너', '상대방', '그 사람'처럼 지칭 대상이 모호한 표현을 피하세요.
-                - 비슷한 표현이나 동일한 사건을 반복해서 설명하지 마세요.
-                - 상황과 질문에서 도덕적 판단을 강요하지 마세요.
-                - 참여자가 자신의 실제 경험이나 민감한 개인정보를 공개하지 않아도 대화할 수 있도록 작성하세요.
-                - 단순 취향 선택, 뻔한 도덕 문제, 극단적인 사건, 과도하게 자극적인 상황은 피하세요.
-
-                ## 6. 출력 전 자체 검증
-
-                최종 결과를 출력하기 전에 다음 사항을 확인하세요.
-
-                - 지정 주제에 맞는 상황인가?
-                - 상황이 100~160자 내외이며 최대 3문장인가?
-                - 인물 관계와 핵심 갈등을 쉽게 이해할 수 있는가?
-                - 한쪽 선택만 명백하게 옳은 상황은 아닌가?
-                - 상황 설명이 해결 방법을 미리 제시하지 않는가?
-                - 메인 질문이 해당 상황에 구체적으로 연결되는가?
-                - 메인 질문이 추상적이거나 양자택일을 강요하지 않는가?
-                - 보조질문이 정확히 3개인가?
-                - 보조질문 각각이 새로운 조건과 관점을 제시하는가?
-                - 질문들이 서로 중복되거나 앞선 답변을 전제하지 않는가?
-
-                조건을 충족하지 않는 경우 내부적으로 수정한 뒤 최종 결과만 출력하세요.
-
-                ## 7. 출력 형식
-
-                반드시 아래 구조의 **유효한 JSON 객체 하나만** 반환하세요.
+                반드시 다음 JSON 구조로만 응답하세요.
                 ```json
                 {
-                  "scenario": "100~160자 내외의 구체적인 상황 설명",
-                  "mainQuestion": "핵심 갈등과 연결된 구체적인 행동 질문",
+                  "scenario": "1단계 상황",
+                  "mainQuestion": "1단계 메인 질문",
                   "questions": [
-                    "첫 번째 보조질문",
-                    "두 번째 보조질문",
-                    "세 번째 보조질문"
+                    {
+                      "scenario": "2단계에서 새롭게 공개되는 상황",
+                      "question": "2단계 보조질문"
+                    },
+                    {
+                      "scenario": "3단계에서 새롭게 공개되는 상황",
+                      "question": "3단계 보조질문"
+                    },
+                    {
+                      "scenario": "4단계에서 새롭게 공개되는 상황",
+                      "question": "4단계 보조질문"
+                    }
                   ]
                 }
                 ```
 
-                JSON 외의 설명, 제목, 번호, 해설, 정답, 선택지 또는 마크다운 코드 블록은 출력하지 마세요.
+                JSON 외의 제목, 설명, 해설, 번호, 정답 또는 마크다운 코드 블록을 출력하지 마세요.
+
+                출력 전 전체 스토리가 자연스럽게 연결되는지, 서로 다른 시선이 드러나는지, 특정 결론을 강요하지 않는지 검토하세요.
                 """.formatted(category);
         var string = Map.of("type", "string");
+        var stage = Map.of("type", "object", "required", List.of("scenario", "question"),
+                "properties", Map.of("scenario", string, "question", string));
         var schema = Map.of("type", "object", "required", List.of("scenario", "mainQuestion", "questions"),
                 "properties", Map.of("scenario", string, "mainQuestion", string, "questions",
-                        Map.of("type", "array", "items", string, "minItems", 3, "maxItems", 3)));
+                        Map.of("type", "array", "items", stage, "minItems", 3, "maxItems", 3)));
         var response = post("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent",
                 "x-goog-api-key", GEMINI_KEY, Duration.ofSeconds(30),
                 Map.of("contents", List.of(Map.of("parts", List.of(Map.of("text", prompt)))),
@@ -250,21 +197,28 @@ public final class ChatProviders {
         if (questions.size() != 3) {
             throw new IOException("Unexpected Gemini topic shape");
         }
-        List<String> topic = new ArrayList<>();
-        // The prompt targets about 100–160 characters, with room for a small overrun.
-        String scenario = validate(result.get("scenario"), 180);
+        String scenario = validate(result.get("scenario"), 175);
         String mainQuestion = validate(result.get("mainQuestion"), 145);
-        topic.add(scenario + "\\n\\nQ. " + mainQuestion);
-        List<String> allQuestions = new ArrayList<>(4);
-        allQuestions.add(mainQuestion);
-        for (var question : questions) {
-            allQuestions.add(validate(question, 300));
+        var opening = scenario + "\n\nQ. " + mainQuestion;
+        if (!TopicRules.eligible(opening)) {
+            throw new IOException("Invalid story opening");
         }
-        if (allQuestions.stream().distinct().count() != 4) {
-            throw new IOException("Duplicate topic text");
+        List<TopicStory.Stage> stages = new ArrayList<>(3);
+        var questionTexts = new java.util.HashSet<String>();
+        questionTexts.add(mainQuestion);
+        for (var item : questions) {
+            if (!item.isJsonObject()) {
+                throw new IOException("Invalid story stage");
+            }
+            var followUp = item.getAsJsonObject();
+            String stageScenario = validate(followUp.get("scenario"), 175);
+            String question = validate(followUp.get("question"), 300);
+            if (!TopicRules.eligible(stageScenario + "\n\nQ. " + question) || !questionTexts.add(question)) {
+                throw new IOException("Invalid or repeated story question");
+            }
+            stages.add(new TopicStory.Stage(stageScenario, question));
         }
-        topic.addAll(allQuestions.subList(1, 4));
-        return new Topic(category, List.copyOf(topic));
+        return new Topic(category, new TopicStory(opening, stages));
     }
 
     private static String validate(JsonElement text, int limit) throws IOException {
@@ -295,5 +249,5 @@ public final class ChatProviders {
     }
 
     public enum Decision { ALLOWED, BLOCKED, UNAVAILABLE }
-    public record Topic(String category, List<String> text) {}
+    public record Topic(String category, TopicStory story) {}
 }
