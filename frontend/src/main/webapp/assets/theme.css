@@ -264,7 +264,7 @@ body {
     margin-top: .9rem;
     border: 1px solid var(--seecha-line);
     border-radius: .9rem;
-    background: #faf7ff;
+    background: linear-gradient(125deg, #f0e6fc 0%, #fff1ed 100%);
 }
 
 .developer-story summary {
