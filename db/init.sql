@@ -80,17 +80,6 @@ CREATE TABLE IF NOT EXISTS chat_topics (
     KEY ix_chat_topic_category (category)
 );
 
-INSERT INTO chat_topics (category, scenario, question_one, question_two, question_three) VALUES
-    ('관계', '친구가 중요한 실수를 했다는 걸 알게 됐어요. 당신이라면 친구에게 어떻게 말할 건가요?',
-        '다른 사람이 이미 알고 있다면 어떻게 할 건가요?',
-        '친구가 먼저 의견을 물으면 어떻게 답할 건가요?',
-        '친구가 그 얘기에 상처받을 수 있다면 대화 방식이 달라질까요?'),
-    ('학업', '팀 과제 마감이 임박했는데 한 팀원이 맡은 일을 끝내지 못했어요. 당신이라면 어떻게 하겠어요?',
-        '그 팀원이 가족 문제를 겪고 있다는 걸 알게 된다면요?',
-        '다른 팀원이 기여도를 교수에게 알리자고 한다면요?',
-        '다음 과제에서 같은 상황을 피하려면 어떤 약속을 정하고 싶나요?')
-ON DUPLICATE KEY UPDATE topic_id = topic_id;
-
 SET @seecha_admin_migration = IF(
     EXISTS (SELECT 1 FROM information_schema.columns
             WHERE table_schema = DATABASE() AND table_name = 'members' AND column_name = 'is_admin'),

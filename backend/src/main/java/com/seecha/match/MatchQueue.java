@@ -23,39 +23,19 @@ public final class MatchQueue {
     private final Map<Long, Group> memberships = new HashMap<>();
     private long nextRevision;
     private final Map<Long, ClosedRoom> ended = new HashMap<>();
-    private static final List<TopicStory> TOPICS = List.of(
-            List.of("친구가 중요한 실수를 했다는 걸 알게 됐어요. 당신이라면 친구에게 어떻게 말할 건가요?",
-                    "다른 사람이 이미 알고 있다면 어떻게 할 건가요?",
-                    "친구가 먼저 의견을 물으면 어떻게 답할 건가요?",
-                    "친구가 그 얘기에 상처받을 수 있다면 대화 방식이 달라질까요?"),
-            List.of("오랜 친구가 둘만의 여행을 기대하고 있는데 연인이 같은 날 중요한 가족 행사에 함께 가 달라고 부탁했어요. 두 약속을 모두 지키기 어렵다면 누구에게 어떻게 이야기할 건가요?",
-                    "친구가 이미 취소하기 어려운 숙소를 예약했다면 어떻게 할 건가요?",
-                    "연인이 가족에게 당신이 올 거라고 미리 말했다면 판단이 달라질까요?",
-                    "친구가 다른 날짜에 갈 수 있지만 혼자 준비를 다시 해야 한다면 무엇을 제안할 건가요?"),
-            List.of("가족이 매주 일요일 함께 식사하길 바라지만, 당신에게는 일요일이 온전히 쉴 수 있는 유일한 날이에요. 가족에게 어떤 약속을 제안할 건가요?",
-                    "가족 중 한 사람이 이 식사를 일주일 중 가장 기다린다면 어떻게 말할 건가요?",
-                    "다른 가족이 번갈아 참석하자고 제안한다면 그 제안을 어떻게 받아들일 건가요?",
-                    "앞으로 한 달 동안만 모두 모일 수 있다면 선택이 달라질까요?"),
-            List.of("아파트 복도에 이웃이 유모차를 두기 시작했어요. 이웃은 집 안에 둘 곳이 없다고 하지만, 그 때문에 당신은 장바구니를 들고 지나다니기 불편해졌어요. 어떻게 해결하고 싶나요?",
-                    "이웃이 일주일 뒤까지만 양해해 달라고 한다면 어떻게 답할 건가요?",
-                    "다른 이웃이 단체 채팅방에 바로 문제를 올리자고 한다면 어떻게 행동할 건가요?",
-                    "공용 보관 공간을 만들려면 주민 모두 조금씩 비용을 내야 한다면 어떤 제안을 할 건가요?")).stream().map(TopicStory::legacy).toList();
     private int topicCursor;
-    private List<TopicStory> availableTopics = TOPICS;
+    private List<TopicStory> availableTopics = List.of();
 
     public synchronized void tick(long now) {
         advance(now);
     }
 
     public synchronized void useTopics(List<TopicStory> topics) {
-        var mixed = new ArrayList<>(new java.util.LinkedHashSet<>(TOPICS));
-        topics.stream().filter(topic -> TopicRules.eligible(topic.opening()))
-                .filter(topic -> !mixed.contains(topic)).forEach(mixed::add);
-        useManualTopics(mixed);
+        useManualTopics(topics.stream().filter(topic -> TopicRules.eligible(topic.opening())).distinct().toList());
     }
 
     public synchronized void useManualTopics(List<TopicStory> topics) {
-        var shuffled = new ArrayList<>(topics.isEmpty() ? TOPICS : topics);
+        var shuffled = new ArrayList<>(topics);
         java.util.Collections.shuffle(shuffled);
         availableTopics = List.copyOf(shuffled);
         topicCursor = 0;
@@ -228,6 +208,9 @@ public final class MatchQueue {
     }
 
     private void start(Group group, long now) {
+        if (availableTopics.isEmpty()) {
+            return;
+        }
         group.startedAt = now;
         group.roomKey = ++nextRevision;
         group.topic = availableTopics.get(topicCursor);
