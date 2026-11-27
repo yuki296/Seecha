@@ -47,6 +47,12 @@
         <p>같은 질문 앞에서, 내가 미처 보지 못한 누군가의 이유를 만나보세요.</p>
         <p class="lobby-story-close">생각이 달라도, 서로를 조금 더 이해할 수 있어요.</p>
     </aside>
+    <details class="developer-story">
+        <summary>개발자 이야기</summary>
+        <div class="developer-story-content">
+            <p>이야기를 준비하고 있어요.</p>
+        </div>
+    </details>
     <p class="lobby-guideline">
         <span aria-hidden="true">⚠︎</span>
         <span>욕설이나 비하 표현은 삼가고, 서로의 생각을 존중해 주세요.</span>

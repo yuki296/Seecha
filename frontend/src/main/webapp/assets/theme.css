@@ -259,3 +259,33 @@ body {
     height: auto;
     margin: .3rem auto .9rem;
 }
+
+.developer-story {
+    margin-top: .9rem;
+    border: 1px solid var(--seecha-line);
+    border-radius: .9rem;
+    background: #faf7ff;
+}
+
+.developer-story summary {
+    padding: .75rem .9rem;
+    color: var(--seecha-ink);
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.developer-story summary::marker {
+    color: var(--seecha-accent);
+}
+
+.developer-story-content {
+    padding: 0 .9rem .85rem;
+    color: var(--seecha-muted);
+    line-height: 1.7;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
+.developer-story-content > :last-child {
+    margin-bottom: 0;
+}
